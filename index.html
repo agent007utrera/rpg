@@ -1,0 +1,212 @@
+<!-- Hoja de Personaje: Arkham Horror RPG -->
+<div style="background-color: #002b36; color: white; padding: 20px; border-radius: 10px;">
+  <h1 style="text-align: center;">Hoja de Personaje: Arkham Horror RPG</h1>
+  
+  <!-- Información del Personaje -->
+  <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
+    <legend style="color: white;">Información del Personaje</legend>
+    <label for="name" style="display: block;">Nombre:</label>
+    <input type="text" name="attr_name" id="name" style="width: 100%; margin-bottom: 10px;"><br>
+    <label for="profession" style="display: block;">Profesión:</label>
+    <input type="text" name="attr_profession" id="profession" style="width: 100%; margin-bottom: 10px;">
+  </fieldset>
+
+  <!-- Rastreadores -->
+  <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
+    <legend style="color: white;">Rastreadores</legend>
+
+    <!-- Dados Disponibles -->
+    <label style="display: block;">Dados Disponibles:</label>
+    <div id="dados-disponibles">
+      <input type="checkbox" name="attr_dice_1" id="dice_1">
+      <input type="checkbox" name="attr_dice_2" id="dice_2">
+      <input type="checkbox" name="attr_dice_3" id="dice_3">
+      <input type="checkbox" name="attr_dice_4" id="dice_4">
+      <input type="checkbox" name="attr_dice_5" id="dice_5">
+      <input type="checkbox" name="attr_dice_6" id="dice_6">
+      <button type="button" onclick="resetChecks('dados-disponibles')">Reset</button>
+    </div>
+
+    <!-- Locura -->
+    <label style="display: block;">Locura:</label>
+    <div id="locura">
+      <input type="checkbox" name="attr_madness_1">
+      <input type="checkbox" name="attr_madness_2">
+      <input type="checkbox" name="attr_madness_3">
+      <input type="checkbox" name="attr_madness_4">
+      <input type="checkbox" name="attr_madness_5">
+      <input type="checkbox" name="attr_madness_6">
+      <button type="button" onclick="resetChecks('locura')">Reset</button>
+    </div>
+
+    <!-- Heridas -->
+    <label style="display: block;">Heridas:</label>
+    <div id="heridas">
+      <input type="checkbox" name="attr_wounds_1" onclick="toggleDice(this)">
+      <input type="checkbox" name="attr_wounds_2" onclick="toggleDice(this)">
+      <input type="checkbox" name="attr_wounds_3" onclick="toggleDice(this)">
+      <input type="checkbox" name="attr_wounds_4" onclick="toggleDice(this)">
+      <input type="checkbox" name="attr_wounds_5" onclick="toggleDice(this)">
+      <input type="checkbox" name="attr_wounds_6" onclick="toggleDice(this)">
+      <button type="button" onclick="resetChecks('heridas')">Reset</button>
+    </div>
+  </fieldset>
+
+  <!-- Habilidades -->
+  <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
+    <legend style="color: white;">Habilidades</legend>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px;">
+      <!-- Títulos de las columnas -->
+      <strong>Habilidad</strong>
+      <strong>Valor</strong>
+      <strong>Lanzar</strong>
+      <strong>Resultado</strong>
+
+      <!-- Habilidades -->
+      <label>Agilidad</label>
+      <input type="number" id="skill-agilidad" value="0" style="width: 60px;">
+      <button type="button" onclick="rollSkill('skill-agilidad', this)">Lanzar</button>
+      <span id="result-agilidad"></span>
+
+      <label>Atletismo</label>
+      <input type="number" id="skill-atletismo" value="0" style="width: 60px;">
+      <button type="button" onclick="rollSkill('skill-atletismo', this)">Lanzar</button>
+      <span id="result-atletismo"></span>
+
+      <label>Ingenio</label>
+      <input type="number" id="skill-ingenio" value="0" style="width: 60px;">
+      <button type="button" onclick="rollSkill('skill-ingenio', this)">Lanzar</button>
+      <span id="result-ingenio"></span>
+
+      <label>Presencia</label>
+      <input type="number" id="skill-presencia" value="0" style="width: 60px;">
+      <button type="button" onclick="rollSkill('skill-presencia', this)">Lanzar</button>
+      <span id="result-presencia"></span>
+
+      <label>Intuición</label>
+      <input type="number" id="skill-intuicion" value="0" style="width: 60px;">
+      <button type="button" onclick="rollSkill('skill-intuicion', this)">Lanzar</button>
+      <span id="result-intuicion"></span>
+
+      <label>Conocimientos</label>
+      <input type="number" id="skill-conocimientos" value="0" style="width: 60px;">
+      <button type="button" onclick="rollSkill('skill-conocimientos', this)">Lanzar</button>
+      <span id="result-conocimientos"></span>
+
+      <label>Aplomo</label>
+      <input type="number" id="skill-aplomo" value="0" style="width: 60px;">
+      <button type="button" onclick="rollSkill('skill-aplomo', this)">Lanzar</button>
+      <span id="result-aplomo"></span>
+
+      <label>Combate cuerpo a cuerpo</label>
+      <input type="number" id="skill-ccc" value="0" style="width: 60px;">
+      <button type="button" onclick="rollSkill('skill-ccc', this)">Lanzar</button>
+      <span id="result-ccc"></span>
+
+      <label>Combate a distancia</label>
+      <input type="number" id="skill-cad" value="0" style="width: 60px;">
+      <button type="button" onclick="rollSkill('skill-cad', this)">Lanzar</button>
+      <span id="result-cad"></span>
+
+      <label>Ocultismo</label>
+      <input type="number" id="skill-ocultismo" value="0" style="width: 60px;">
+      <button type="button" onclick="rollSkill('skill-ocultismo', this)">Lanzar</button>
+      <span id="result-ocultismo"></span>
+    </div>
+    <!-- Botón de RESET para Habilidades -->
+    <button type="button" onclick="resetSkills()" style="margin-top: 10px;">RESET</button>
+  </fieldset>
+
+  <!-- Talentos -->
+  <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
+    <legend style="color: white;">Talentos</legend>
+    <textarea name="attr_talents" style="width: 100%; height: 100px; background-color: #073642; color: white;"></textarea>
+  </fieldset>
+
+  <!-- Hechizos -->
+  <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
+    <legend style="color: white;">Hechizos</legend>
+    <textarea name="attr_spells" style="width: 100%; height: 100px; background-color: #073642; color: white;"></textarea>
+  </fieldset>
+
+  <!-- Equipo -->
+  <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
+    <legend style="color: white;">Equipo</legend>
+    <textarea name="attr_equipment" style="width: 100%; height: 100px; background-color: #073642; color: white;"></textarea>
+  </fieldset>
+
+  <!-- Inspiración Actual -->
+  <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
+    <legend style="color: white;">Inspiración Actual</legend>
+    <textarea name="attr_inspiration" style="width: 100%; height: 50px; background-color: #073642; color: white;"></textarea>
+  </fieldset>
+
+  <!-- Varios -->
+  <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
+    <legend style="color: white;">Varios</legend>
+    <textarea name="attr_miscellaneous" style="width: 100%; height: 100px; background-color: #073642; color: white;"></textarea>
+  </fieldset>
+</div>
+
+<script>
+  function resetChecks(sectionId) {
+    const checkboxes = document.querySelectorAll(`#${sectionId} input[type="checkbox"]`);
+    checkboxes.forEach(checkbox => checkbox.checked = false);
+    
+    // Si se hace RESET en HERIDAS, desbloquear todas las casillas de DADOS DISPONIBLES
+    if (sectionId === 'heridas') {
+      const diceCheckboxes = document.querySelectorAll('#dados-disponibles input[type="checkbox"]');
+      diceCheckboxes.forEach(dice => dice.disabled = false);
+    }
+  }
+
+  function toggleDice(checkbox) {
+    const dadosDisponibles = document.querySelectorAll('#dados-disponibles input[type="checkbox"]');
+    let unlocked = 0;
+
+    dadosDisponibles.forEach(dice => {
+      if (!dice.disabled) {
+        unlocked++;
+      }
+    });
+
+    if (checkbox.checked) {
+      for (let dice of dadosDisponibles) {
+        if (!dice.disabled) {
+          dice.disabled = true;
+          break;
+        }
+      }
+    } else {
+      for (let dice of dadosDisponibles) {
+        if (dice.disabled && unlocked < dadosDisponibles.length) {
+          dice.disabled = false;
+          break;
+        }
+      }
+    }
+  }
+
+  function rollSkill(skillId, button) {
+    const skillValue = parseInt(document.getElementById(skillId).value);
+    const result = Math.floor(Math.random() * 6) + 1;
+    const resultElement = document.getElementById('result-' + skillId.split('-')[1]);
+
+    resultElement.textContent = `Resultado: ${result}`;
+
+    if (result >= skillValue) {
+      resultElement.style.color = 'green';
+      resultElement.textContent += " - ÉXITO";
+    } else {
+      resultElement.style.color = 'red';
+      resultElement.textContent += " - FALLO";
+    }
+  }
+
+  function resetSkills() {
+    const inputs = document.querySelectorAll('#dados-disponibles input[type="number"]');
+    inputs.forEach(input => input.value = '0');
+    const results = document.querySelectorAll('#dados-disponibles span');
+    results.forEach(result => result.textContent = "");
+  }
+</script>
