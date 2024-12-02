@@ -204,9 +204,7 @@
   }
 
   function resetSkills() {
-    const inputs = document.querySelectorAll('#dados-disponibles input[type="number"]');
-    inputs.forEach(input => input.value = '0');
-    const results = document.querySelectorAll('#dados-disponibles span');
+    const results = document.querySelectorAll('span[id^="result-"]');
     results.forEach(result => result.textContent = "");
   }
 </script>
