@@ -1,0 +1,214 @@
+<!-- Hoja de Personaje: Arkham Horror RPG -->
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"></head><body><div style="background-color: #002b36; color: white; padding: 20px; border-radius: 10px;">
+  <h1 style="text-align: center;">Hoja de Personaje: Arkham Horror RPG</h1>
+  
+  <!-- Información del Personaje -->
+  <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
+    <legend style="color: white;">Información del Personaje</legend>
+    <label for="name" style="display: block;">Nombre:</label>
+    <input type="text" name="attr_name" id="name" style="width: 100%; margin-bottom: 10px;" value="Joe Diamond"><br>
+    <label for="profession" style="display: block;">Profesión:</label>
+    <input type="text" name="attr_profession" id="profession" style="width: 100%; margin-bottom: 10px;" value="Detective privado">
+  </fieldset>
+
+  <!-- Rastreadores -->
+  <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
+    <legend style="color: white;">Rastreadores</legend>
+
+    <!-- Dados Disponibles -->
+    <label style="display: block;">Dados Disponibles:</label>
+    <div id="dados-disponibles">
+      <input type="checkbox" name="attr_dice_1" id="dice_1">
+      <input type="checkbox" name="attr_dice_2" id="dice_2">
+      <input type="checkbox" name="attr_dice_3" id="dice_3">
+      <input type="checkbox" name="attr_dice_4" id="dice_4">
+      <input type="checkbox" name="attr_dice_5" id="dice_5">
+      <input type="checkbox" name="attr_dice_6" id="dice_6">
+      <button type="button" onclick="resetChecks('dados-disponibles')">Reset</button>
+    </div>
+
+    <!-- Locura -->
+    <label style="display: block;">Locura:</label>
+    <div id="locura">
+      <input type="checkbox" name="attr_madness_1">
+      <input type="checkbox" name="attr_madness_2">
+      <input type="checkbox" name="attr_madness_3">
+      <input type="checkbox" name="attr_madness_4">
+      <input type="checkbox" name="attr_madness_5">
+      <input type="checkbox" name="attr_madness_6">
+      <button type="button" onclick="resetChecks('locura')">Reset</button>
+    </div>
+
+    <!-- Heridas -->
+    <label style="display: block;">Heridas:</label>
+    <div id="heridas">
+      <input type="checkbox" name="attr_wounds_1" onclick="toggleDice(this)">
+      <input type="checkbox" name="attr_wounds_2" onclick="toggleDice(this)">
+      <input type="checkbox" name="attr_wounds_3" onclick="toggleDice(this)">
+      <input type="checkbox" name="attr_wounds_4" onclick="toggleDice(this)">
+      <input type="checkbox" name="attr_wounds_5" onclick="toggleDice(this)">
+      <input type="checkbox" name="attr_wounds_6" onclick="toggleDice(this)">
+      <button type="button" onclick="resetChecks('heridas')">Reset</button>
+    </div>
+  </fieldset>
+
+  <!-- Habilidades -->
+  <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
+    <legend style="color: white;">Habilidades</legend>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px;">
+      <!-- Títulos de las columnas -->
+      <strong>Habilidad</strong>
+      <strong>Valor</strong>
+      <strong>Lanzar</strong>
+      <strong>Resultado</strong>
+
+      <!-- Habilidades -->
+      <label>Agilidad</label>
+      <input type="number" id="skill-agilidad" value="5" style="width: 60px;">
+      <button type="button" onclick="rollSkill('skill-agilidad', this)">Lanzar</button>
+      <span id="result-agilidad" style="color: green;"></span>
+
+      <label>Atletismo</label>
+      <input type="number" id="skill-atletismo" value="5" style="width: 60px;">
+      <button type="button" onclick="rollSkill('skill-atletismo', this)">Lanzar</button>
+      <span id="result-atletismo" style="color: red;"></span>
+
+      <label>Ingenio</label>
+      <input type="number" id="skill-ingenio" value="4" style="width: 60px;">
+      <button type="button" onclick="rollSkill('skill-ingenio', this)">Lanzar</button>
+      <span id="result-ingenio" style="color: red;"></span>
+
+      <label>Presencia</label>
+      <input type="number" id="skill-presencia" value="6" style="width: 60px;">
+      <button type="button" onclick="rollSkill('skill-presencia', this)">Lanzar</button>
+      <span id="result-presencia" style="color: green;"></span>
+
+      <label>Intuición</label>
+      <input type="number" id="skill-intuicion" value="6" style="width: 60px;">
+      <button type="button" onclick="rollSkill('skill-intuicion', this)">Lanzar</button>
+      <span id="result-intuicion" style="color: red;"></span>
+
+      <label>Conocimientos</label>
+      <input type="number" id="skill-conocimientos" value="6" style="width: 60px;">
+      <button type="button" onclick="rollSkill('skill-conocimientos', this)">Lanzar</button>
+      <span id="result-conocimientos" style="color: red;"></span>
+
+      <label>Aplomo</label>
+      <input type="number" id="skill-aplomo" value="4" style="width: 60px;">
+      <button type="button" onclick="rollSkill('skill-aplomo', this)">Lanzar</button>
+      <span id="result-aplomo" style="color: green;"></span>
+
+      <label>Combate cuerpo a cuerpo</label>
+      <input type="number" id="skill-ccc" value="5" style="width: 60px;">
+      <button type="button" onclick="rollSkill('skill-ccc', this)">Lanzar</button>
+      <span id="result-ccc" style="color: red;"></span>
+
+      <label>Combate a distancia</label>
+      <input type="number" id="skill-cad" value="4" style="width: 60px;">
+      <button type="button" onclick="rollSkill('skill-cad', this)">Lanzar</button>
+      <span id="result-cad" style="color: red;"></span>
+
+      <label>Ocultismo</label>
+      <input type="number" id="skill-ocultismo" value="6" style="width: 60px;">
+      <button type="button" onclick="rollSkill('skill-ocultismo', this)">Lanzar</button>
+      <span id="result-ocultismo" style="color: red;"></span>
+    </div>
+    <!-- Botón de RESET para Habilidades -->
+    <button type="button" onclick="resetSkills()" style="margin-top: 10px;">RESET</button>
+  </fieldset>
+
+  <!-- Talentos -->
+  <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
+    <legend style="color: white;">Talentos</legend>
+    <textarea name="attr_talents" style="width: 100%; height: 100px; background-color: #073642; color: white;">-Duro de pelar. Cuando realices un esfuerzo, puedes reducir en 1 ó 2 puntos el resultado del dado que tires para determinar la herida que sufres (hasta un resultado mínimo de 1).
+
+-Una pistola en cada mano. Cuando empuñes dos pistolas, una vez por turno después de efectuar un ataque, ganas 1 dado adicional que solamente podrás usar para realizar un ataque adicional con la otra pistola. Los dos ataques pueden efectuarse contra un mismo objetivo o contra objetivos distintos.</textarea>
+  </fieldset>
+
+  <!-- Hechizos -->
+  <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
+    <legend style="color: white;">Hechizos</legend>
+    <textarea name="attr_spells" style="width: 100%; height: 100px; background-color: #073642; color: white;"></textarea>
+  </fieldset>
+
+  <!-- Equipo -->
+  <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
+    <legend style="color: white;">Equipo</legend>
+    <textarea name="attr_equipment" style="width: 100%; height: 100px; background-color: #073642; color: white;"></textarea>
+  </fieldset>
+
+  <!-- Inspiración Actual -->
+  <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
+    <legend style="color: white;">Inspiración Actual</legend>
+    <textarea name="attr_inspiration" style="width: 100%; height: 50px; background-color: #073642; color: white;"></textarea>
+  </fieldset>
+
+  <!-- Varios -->
+  <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
+    <legend style="color: white;">Varios</legend>
+    <textarea name="attr_miscellaneous" style="width: 100%; height: 100px; background-color: #073642; color: white;"></textarea>
+  </fieldset>
+</div>
+
+<script>
+  function resetChecks(sectionId) {
+    const checkboxes = document.querySelectorAll(`#${sectionId} input[type="checkbox"]`);
+    checkboxes.forEach(checkbox => checkbox.checked = false);
+    
+    // Si se hace RESET en HERIDAS, desbloquear todas las casillas de DADOS DISPONIBLES
+    if (sectionId === 'heridas') {
+      const diceCheckboxes = document.querySelectorAll('#dados-disponibles input[type="checkbox"]');
+      diceCheckboxes.forEach(dice => dice.disabled = false);
+    }
+  }
+
+  function toggleDice(checkbox) {
+    const dadosDisponibles = document.querySelectorAll('#dados-disponibles input[type="checkbox"]');
+    let unlocked = 0;
+
+    dadosDisponibles.forEach(dice => {
+      if (!dice.disabled) {
+        unlocked++;
+      }
+    });
+
+    if (checkbox.checked) {
+      for (let dice of dadosDisponibles) {
+        if (!dice.disabled) {
+          dice.disabled = true;
+          break;
+        }
+      }
+    } else {
+      for (let dice of dadosDisponibles) {
+        if (dice.disabled && unlocked < dadosDisponibles.length) {
+          dice.disabled = false;
+          break;
+        }
+      }
+    }
+  }
+
+  function rollSkill(skillId, button) {
+    const skillValue = parseInt(document.getElementById(skillId).value);
+    const result = Math.floor(Math.random() * 6) + 1;
+    const resultElement = document.getElementById('result-' + skillId.split('-')[1]);
+
+    resultElement.textContent = `Resultado: ${result}`;
+
+    if (result >= skillValue) {
+      resultElement.style.color = 'green';
+      resultElement.textContent += " - ÉXITO";
+    } else {
+      resultElement.style.color = 'red';
+      resultElement.textContent += " - FALLO";
+    }
+  }
+
+  function resetSkills() {
+    const results = document.querySelectorAll('span[id^="result-"]');
+    results.forEach(result => result.textContent = "");
+  }
+</script>
+</body></html>
