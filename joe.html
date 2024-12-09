@@ -1,8 +1,103 @@
 <!-- Hoja de Personaje: Arkham Horror RPG -->
 <html><head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8"></head><body><div style="background-color: #002b36; color: white; padding: 20px; border-radius: 10px;">
-  <h1 style="text-align: center;">Hoja de Personaje: Arkham Horror RPG</h1>
-  
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Dados Vintage</title>
+    <style>
+        /* Estilos básicos */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Georgia", serif;
+            background-color: #002244;
+            color: white;
+            text-align: center;
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 50px;
+            font-weight: bold;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 5px #000;
+        }
+
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Eliminar borde blanco en la fila de dados */
+        #fila-dados td {
+            border: none; /* Quita el borde de las celdas de la fila de dados */
+        }
+
+        .btn-dano, .btn-cordura, .reset-btn {
+            font-family: "Georgia", serif;
+            font-size: 16px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 2px;
+            border: 2px solid white;
+            padding: 8px 20px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        .btn-dano {
+            background-color: #b22222;
+            color: white;
+        }
+
+        .btn-cordura {
+            background-color: #1e90ff;
+            color: white;
+        }
+
+        .reset-btn {
+            background-color: #228b22;
+            color: white;
+            font-size: 20px;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Animación de botones */
+        button:hover {
+            transform: scale(1.1);
+            transition: 0.3s ease-in-out;
+        }
+
+        /* Estilo para mostrar el número o texto en el dado */
+        .resultado {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            margin-top: 10px;
+        }
+    </style>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"></head>
+
+
+
+<body><div style="background-color: #002b36; color: white; padding: 20px; border-radius: 10px;">
+  <h1 style="text-align: center;">Arkham Horror RPG</h1>
   <!-- Información del Personaje -->
   <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
     <legend style="color: white;">Información del Personaje</legend>
@@ -11,47 +106,117 @@
     <label for="profession" style="display: block;">Profesión:</label>
     <input type="text" name="attr_profession" id="profession" style="width: 100%; margin-bottom: 10px;" value="Detective privado">
   </fieldset>
+ <h1></h1>
+    <table id="tabla-dados">
+        <tr id="fila-dano"></tr>
+        <tr id="fila-dados"></tr>
+        <tr id="fila-cordura"></tr>
+    </table>
 
+    <button class="reset-btn" onclick="resetDados()">Reset</button>
+
+    <script>
+        const columnas = 6;
+
+        function crearTabla() {
+            for (let i = 0; i < columnas; i++) {
+                // Fila de DAÑO
+                const celdaDano = document.createElement("td");
+                celdaDano.innerHTML = `<button class="btn-dano" onclick="alternarDano(${i})">DAÑO</button>`;
+                document.getElementById("fila-dano").appendChild(celdaDano);
+
+                // Fila de DADOS
+                const celdaDado = document.createElement("td");
+                celdaDado.innerHTML = `<img src="dadoblanco.png" id="dado-${i}" data-bloqueado="false" data-cordura="false" onclick="tirarDado(${i})">
+                                       <div id="resultado-${i}" class="resultado"></div>`;
+                document.getElementById("fila-dados").appendChild(celdaDado);
+
+                // Fila de CORDURA
+                const celdaCordura = document.createElement("td");
+                celdaCordura.innerHTML = `<button class="btn-cordura" onclick="alternarCordura(${i})">CORDURA</button>`;
+                document.getElementById("fila-cordura").appendChild(celdaCordura);
+            }
+        }
+
+        function eliminarDado(index) {
+            const dado = document.getElementById(`dado-${index}`);
+            if (dado && dado.dataset.bloqueado === "false") {
+                dado.style.display = "none";
+            }
+        }
+
+        function alternarDano(index) {
+            const dado = document.getElementById(`dado-${index}`);
+            if (dado) {
+                const estaBloqueado = dado.dataset.bloqueado === "true";
+                if (estaBloqueado) {
+                    // Desbloquear el dado
+                    dado.src = "dadoblanco.png";
+                    dado.dataset.bloqueado = "false";
+                } else {
+                    // Bloquear el dado
+                    dado.src = "bloqueo.png";
+                    dado.dataset.bloqueado = "true";
+                }
+                dado.style.display = "block";  // Mostrar siempre el dado al alternar
+            }
+        }
+
+        function alternarCordura(index) {
+            const dado = document.getElementById(`dado-${index}`);
+            if (dado && dado.dataset.bloqueado === "false") {
+                const tieneCordura = dado.dataset.cordura === "true";
+                if (tieneCordura) {
+                    // Volver a blanco
+                    dado.src = "dadoblanco.png";
+                    dado.dataset.cordura = "false";
+                } else {
+                    // Cambiar a verde
+                    dado.src = "dadoverde.png";
+                    dado.dataset.cordura = "true";
+                }
+                dado.style.display = "block";  // Mostrar siempre el dado
+            }
+        }
+
+        function tirarDado(index) {
+            const dado = document.getElementById(`dado-${index}`);
+            const resultadoDiv = document.getElementById(`resultado-${index}`);
+            if (dado && dado.dataset.bloqueado === "false") {
+                // Generar número aleatorio
+                const numero = Math.floor(Math.random() * 6) + 1;
+                if (dado.src.includes("dadoverde.png") && numero === 1) {
+                    // Si es dado verde y sale un 1, mostrar LOCURA
+                    resultadoDiv.innerText = "LOCURA";
+                } else {
+                    // Si no, mostrar el número
+                    resultadoDiv.innerText = numero;
+                }
+                dado.style.display = "none";  // Hacer desaparecer el dado después de tirar
+            }
+        }
+
+        function resetDados() {
+            for (let i = 0; i < columnas; i++) {
+                const dado = document.getElementById(`dado-${i}`);
+                const bloqueado = dado.dataset.bloqueado === "true";
+                const tieneCordura = dado.dataset.cordura === "true";
+
+                if (!bloqueado) {
+                    // Restablecer dados no bloqueados
+                    dado.src = tieneCordura ? "dadoverde.png" : "dadoblanco.png";
+                    const resultadoDiv = document.getElementById(`resultado-${i}`);
+                    resultadoDiv.innerText = ""; // Limpiar el resultado
+                    dado.style.display = "block";  // Mostrar dados no bloqueados
+                }
+            }
+        }
+
+        // Inicializa la tabla
+        crearTabla();
+    </script>
   <!-- Rastreadores -->
-  <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
-    <legend style="color: white;">Rastreadores</legend>
 
-    <!-- Dados Disponibles -->
-    <label style="display: block;">Dados Disponibles:</label>
-    <div id="dados-disponibles">
-      <input type="checkbox" name="attr_dice_1" id="dice_1">
-      <input type="checkbox" name="attr_dice_2" id="dice_2">
-      <input type="checkbox" name="attr_dice_3" id="dice_3">
-      <input type="checkbox" name="attr_dice_4" id="dice_4">
-      <input type="checkbox" name="attr_dice_5" id="dice_5">
-      <input type="checkbox" name="attr_dice_6" id="dice_6">
-      <button type="button" onclick="resetChecks('dados-disponibles')">Reset</button>
-    </div>
-
-    <!-- Locura -->
-    <label style="display: block;">Locura:</label>
-    <div id="locura">
-      <input type="checkbox" name="attr_madness_1">
-      <input type="checkbox" name="attr_madness_2">
-      <input type="checkbox" name="attr_madness_3">
-      <input type="checkbox" name="attr_madness_4">
-      <input type="checkbox" name="attr_madness_5">
-      <input type="checkbox" name="attr_madness_6">
-      <button type="button" onclick="resetChecks('locura')">Reset</button>
-    </div>
-
-    <!-- Heridas -->
-    <label style="display: block;">Heridas:</label>
-    <div id="heridas">
-      <input type="checkbox" name="attr_wounds_1" onclick="toggleDice(this)">
-      <input type="checkbox" name="attr_wounds_2" onclick="toggleDice(this)">
-      <input type="checkbox" name="attr_wounds_3" onclick="toggleDice(this)">
-      <input type="checkbox" name="attr_wounds_4" onclick="toggleDice(this)">
-      <input type="checkbox" name="attr_wounds_5" onclick="toggleDice(this)">
-      <input type="checkbox" name="attr_wounds_6" onclick="toggleDice(this)">
-      <button type="button" onclick="resetChecks('heridas')">Reset</button>
-    </div>
-  </fieldset>
 
   <!-- Habilidades -->
   <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
@@ -129,19 +294,38 @@
   <!-- Hechizos -->
   <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
     <legend style="color: white;">Hechizos</legend>
-    <textarea name="attr_spells" style="width: 100%; height: 100px; background-color: #073642; color: white;"></textarea>
+    <textarea name="attr_spells" style="width: 100%; height: 50px; background-color: #073642; color: white;">
+
+</textarea>
   </fieldset>
 
   <!-- Equipo -->
   <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
     <legend style="color: white;">Equipo</legend>
-    <textarea name="attr_equipment" style="width: 100%; height: 100px; background-color: #073642; color: white;"></textarea>
+    <textarea name="attr_equipment" style="width: 100%; height: 160px; background-color: #073642; color: white;">
+-Dos pistolas Colt 1911. 13 metros. Daño 2. Cada pistola se empuña en una mano. Cuando estés trabado con un enemigo a distancia de cuerpo a cuerpo, sólo puedes atacar a ese enemigo con estas pistolas. Si obtienes al menos 3 éxitos, infliges una herida.
+-Munición del calibre .45. Si sacas un 1 en alguno de los dados al utilizar este arma, quita una X. Si no hay Xs en un arma, hay que recargarla.
+Colt izquierda: XX
+Colt derecha: XX
+-Puñetazo/patada. Cuerpo a cuerpo. Daño 1.
+-Gabardina barata (armadura). Cuando lleves a cabo una reacción para eludir un ataque, puedes volver a tirar el dado. Debes aceptar el nuevo resultado. Este objeto es destruido si sufres una herida mientras lo llevas puesto.
+-Otras pertenencias: Sombrero de fieltro, 2 cargadores adicionales, mechero Zippo, 12 dólares
+</textarea>
   </fieldset>
 
   <!-- Inspiración Actual -->
   <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
     <legend style="color: white;">Inspiración Actual</legend>
-    <textarea name="attr_inspiration" style="width: 100%; height: 50px; background-color: #073642; color: white;"></textarea>
+    <textarea name="attr_inspiration" style="width: 100%; height: 150px; background-color: #073642; color: white;">
+Inspiración: 2
+
+Puedes gastar tu inspiración de las siguientes maneras:
+-Después de tener éxito en un acción compleja, puedes gastar 1 de inspiración para añadir un éxito adicional al resultado.
+-Al llevar a cabo una reacción para esquivar, bloquear o resistir un ataque, puedes gastar 1 de inspiración para resolver dicha reacción con ventaja.
+-Antes de realizar una acción compleja, puedes gastar 1 de inspiración para realizar dicha acción con ventaja.
+-Puedes gastar 1 o más de inspiración para introducir un elemento narrativo en la escena actual.
+-También puedes gastar inspiración para evitar los efectos de determinados traumas allí donde se especifique.
+</textarea>
   </fieldset>
 
   <!-- Varios -->
