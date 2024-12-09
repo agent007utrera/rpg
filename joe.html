@@ -302,23 +302,62 @@
   <!-- Equipo -->
   <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
     <legend style="color: white;">Equipo</legend>
-    <textarea name="attr_equipment" style="width: 100%; height: 160px; background-color: #073642; color: white;">
+    <textarea name="attr_equipment" style="width: 100%; height: 190px; background-color: #073642; color: white;">
 -Dos pistolas Colt 1911. 13 metros. Daño 2. Cada pistola se empuña en una mano. Cuando estés trabado con un enemigo a distancia de cuerpo a cuerpo, sólo puedes atacar a ese enemigo con estas pistolas. Si obtienes al menos 3 éxitos, infliges una herida.
--Munición del calibre .45. Si sacas un 1 en alguno de los dados al utilizar este arma, quita una X. Si no hay Xs en un arma, hay que recargarla.
-Colt izquierda: XX
-Colt derecha: XX
+
 -Puñetazo/patada. Cuerpo a cuerpo. Daño 1.
+
 -Gabardina barata (armadura). Cuando lleves a cabo una reacción para eludir un ataque, puedes volver a tirar el dado. Debes aceptar el nuevo resultado. Este objeto es destruido si sufres una herida mientras lo llevas puesto.
+
 -Otras pertenencias: Sombrero de fieltro, 2 cargadores adicionales, mechero Zippo.
+
+-Munición del calibre .45. Si sacas un 1 en alguno de los dados al utilizar este arma, marca una de las Colts. Si están marcadas los 2 cuadros, hay que recargarla.
 </textarea>
+
+ <div class="grupo">
+                <label for="coltIzq">Colt Izquierda:</label>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" name="coltIzq1"> 
+                    </label>
+                    <label>
+                        <input type="checkbox" name="coltIzq2"> 
+                    </label>
+                </div>
+            </div>
+
+            <!-- Columna Derecha -->
+            <div class="grupo">
+                <label for="coltDer">Colt Derecha:</label>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" name="coltDer1"> 
+                    </label>
+                    <label>
+                        <input type="checkbox" name="coltDer2"> 
+                    </label>
+                </div>
+            </div>
+
   </fieldset>
 
   <!-- Inspiración Actual -->
   <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
-    <legend style="color: white;">Inspiración Actual</legend>
-    <textarea name="attr_inspiration" style="width: 100%; height: 150px; background-color: #073642; color: white;">
-Inspiración: 2
+    <legend style="color: white;">Inspiración</legend>
 
+ <div class="grupo">
+                <label for="InsAct">Inspiración actual:</label>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" name="InsAct1"> 
+                    </label>
+                    <label>
+                        <input type="checkbox" name="InsAct2"> 
+                    </label>
+                </div>
+            </div>
+
+    <textarea name="attr_inspiration" style="width: 100%; height: 120px; background-color: #073642; color: white;">
 Puedes gastar tu inspiración de las siguientes maneras:
 -Después de tener éxito en un acción compleja, puedes gastar 1 de inspiración para añadir un éxito adicional al resultado.
 -Al llevar a cabo una reacción para esquivar, bloquear o resistir un ataque, puedes gastar 1 de inspiración para resolver dicha reacción con ventaja.
