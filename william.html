@@ -2,7 +2,7 @@
 <html><head>
   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joe Diamond</title>
+    <title>William Yorick</title>
     <style>
         /* Estilos básicos */
         * {
@@ -98,15 +98,14 @@
 
 <body><div style="background-color: #002b36; color: white; padding: 20px; border-radius: 10px;">
   <h1 style="text-align: center;">Arkham Horror RPG</h1>
-            <img src="images/joe.jpg" alt="Joe Diamond">
+            <img src="images/william.jpg" alt="William Yorick">
   <!-- Información del Personaje -->
   <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
     <legend style="color: white;">Información del Personaje</legend>
     <label for="name" style="display: block;">Nombre:</label>
-    <input type="text" name="attr_name" id="name" style="width: 100%; margin-bottom: 10px;" value="Joe Diamond"><br>
+    <input type="text" name="attr_name" id="name" style="width: 100%; margin-bottom: 10px;" value="William Yorick"><br>
     <label for="profession" style="display: block;">Profesión:</label>
-    <input type="text" name="attr_profession" id="profession" style="width: 100%; margin-bottom: 10px;" value="Detective privado">
-
+    <input type="text" name="attr_profession" id="profession" style="width: 100%; margin-bottom: 10px;" value="Sepulturero">
   </fieldset>
  <h1></h1>
     <table id="tabla-dados">
@@ -232,27 +231,27 @@
 
       <!-- Habilidades -->
       <label>Agilidad</label>
-      <input type="number" id="skill-agilidad" value="5" style="width: 60px;">
+      <input type="number" id="skill-agilidad" value="6" style="width: 60px;">
       <button type="button" onclick="rollSkill('skill-agilidad', this)">Lanzar</button>
       <span id="result-agilidad" style="color: green;"></span>
 
       <label>Atletismo</label>
-      <input type="number" id="skill-atletismo" value="5" style="width: 60px;">
+      <input type="number" id="skill-atletismo" value="4" style="width: 60px;">
       <button type="button" onclick="rollSkill('skill-atletismo', this)">Lanzar</button>
       <span id="result-atletismo" style="color: red;"></span>
 
       <label>Ingenio</label>
-      <input type="number" id="skill-ingenio" value="4" style="width: 60px;">
+      <input type="number" id="skill-ingenio" value="6" style="width: 60px;">
       <button type="button" onclick="rollSkill('skill-ingenio', this)">Lanzar</button>
       <span id="result-ingenio" style="color: red;"></span>
 
       <label>Presencia</label>
-      <input type="number" id="skill-presencia" value="6" style="width: 60px;">
+      <input type="number" id="skill-presencia" value="4" style="width: 60px;">
       <button type="button" onclick="rollSkill('skill-presencia', this)">Lanzar</button>
       <span id="result-presencia" style="color: green;"></span>
 
       <label>Intuición</label>
-      <input type="number" id="skill-intuicion" value="6" style="width: 60px;">
+      <input type="number" id="skill-intuicion" value="4" style="width: 60px;">
       <button type="button" onclick="rollSkill('skill-intuicion', this)">Lanzar</button>
       <span id="result-intuicion" style="color: red;"></span>
 
@@ -262,7 +261,7 @@
       <span id="result-conocimientos" style="color: red;"></span>
 
       <label>Aplomo</label>
-      <input type="number" id="skill-aplomo" value="4" style="width: 60px;">
+      <input type="number" id="skill-aplomo" value="5" style="width: 60px;">
       <button type="button" onclick="rollSkill('skill-aplomo', this)">Lanzar</button>
       <span id="result-aplomo" style="color: green;"></span>
 
@@ -272,12 +271,12 @@
       <span id="result-ccc" style="color: red;"></span>
 
       <label>Combate a distancia</label>
-      <input type="number" id="skill-cad" value="4" style="width: 60px;">
+      <input type="number" id="skill-cad" value="5" style="width: 60px;">
       <button type="button" onclick="rollSkill('skill-cad', this)">Lanzar</button>
       <span id="result-cad" style="color: red;"></span>
 
       <label>Ocultismo</label>
-      <input type="number" id="skill-ocultismo" value="6" style="width: 60px;">
+      <input type="number" id="skill-ocultismo" value="5" style="width: 60px;">
       <button type="button" onclick="rollSkill('skill-ocultismo', this)">Lanzar</button>
       <span id="result-ocultismo" style="color: red;"></span>
     </div>
@@ -288,9 +287,11 @@
   <!-- Talentos -->
   <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
     <legend style="color: white;">Talentos</legend>
-    <textarea name="attr_talents" style="width: 100%; height: 100px; background-color: #073642; color: white;">-Duro de pelar. Cuando realices un esfuerzo, puedes reducir en 1 ó 2 puntos el resultado del dado que tires para determinar la herida que sufres (hasta un resultado mínimo de 1).
+    <textarea name="attr_talents" style="width: 100%; height: 120px; background-color: #073642; color: white;">
+-Doblete. Después de que un aliado ataque con éxito a un objetivo que esté trabado en COMBATE CUERPO A CUERPO contigo, puedes usar 1 dado (si te queda alguno) para realizar una acción compleja de ATLETISMO. Si tienes éxito, el objetivo es empujado 1,5 metros hacia atrás; si al hacerlo choca contra algún obstáculo, sufre 1 punto de daño. En caso contrario, el objetivo es derribado.
 
--Una pistola en cada mano. Cuando empuñes dos pistolas, una vez por turno después de efectuar un ataque, ganas 1 dado adicional que solamente podrás usar para realizar un ataque adicional con la otra pistola. Los dos ataques pueden efectuarse contra un mismo objetivo o contra objetivos distintos.</textarea>
+-Preparación y postura. Puedes realizar una acción simple para prepararte físicamente. Si lo haces, la próxima vez que realices una acción compleja de ATLETISMO o COMBATE CUERPO A CUERPO en tu turno actual podrás volver a lanzar los dados que quieras. Debes aceptar los nuevos resultados.
+</textarea>
   </fieldset>
 
   <!-- Hechizos -->
@@ -304,42 +305,17 @@
   <!-- Equipo -->
   <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
     <legend style="color: white;">Equipo</legend>
-    <textarea name="attr_equipment" style="width: 100%; height: 190px; background-color: #073642; color: white;">
--Dos pistolas Colt 1911. 13 metros. Daño 2. Cada pistola se empuña en una mano. Cuando estés trabado con un enemigo a distancia de CUERPO A CUERPO, sólo puedes atacar a ese enemigo con estas pistolas. Si obtienes al menos 3 éxitos, infliges una herida.
+    <textarea name="attr_equipment" style="width: 100%; height: 170px; background-color: #073642; color: white;">
+-Pala de sepulturero. CUERPO A CUERPO. Daño 2. Dos manos. Si obtienes al menos 3 éxitos, infliges 1 herida.
+
+-Chaqueta de cuerpo gruesa (armadura). Cuando sufras daño a consecuencia de un ATAQUE CUERPO A CUERPO, reduce ese daño en 1 (hasta un mínimo de 1).
 
 -Puñetazo/patada. CUERPO A CUERPO. Daño 1.
 
--Gabardina barata (armadura). Cuando lleves a cabo una reacción para eludir un ataque, puedes volver a tirar el dado. Debes aceptar el nuevo resultado. Este objeto es destruido si sufres una herida mientras lo llevas puesto.
+-Lámpara de queroseno. Ilumina un radio de 6 metros cuando está encendida.
 
--Otras pertenencias: Sombrero de fieltro, 2 cargadores adicionales, mechero Zippo.
-
--Munición del calibre .45. Si sacas un 1 en alguno de los dados al utilizar este arma, marca una de las Colts. Si están marcadas los 2 cuadros, hay que recargarla.
+-Otras pertenencias: Un par de guantes gruesos, caja de cerillas, petaca con licor.
 </textarea>
-
- <div class="grupo">
-                <label for="coltIzq">Colt izquierda:</label>
-                <div class="checkbox-group">
-                    <label>
-                        <input type="checkbox" name="coltIzq1"> 
-                    </label>
-                    <label>
-                        <input type="checkbox" name="coltIzq2"> 
-                    </label>
-                </div>
-            </div>
-
-            <!-- Columna Derecha -->
-            <div class="grupo">
-                <label for="coltDer">Colt derecha:</label>
-                <div class="checkbox-group">
-                    <label>
-                        <input type="checkbox" name="coltDer1"> 
-                    </label>
-                    <label>
-                        <input type="checkbox" name="coltDer2"> 
-                    </label>
-                </div>
-            </div>
 
   </fieldset>
 
@@ -375,7 +351,7 @@ Puedes gastar tu inspiración de las siguientes maneras:
   <!-- Dólares -->
   <fieldset style="margin-bottom: 15px; padding: 10px; border: 2px solid white;">
     <legend style="color: white;">Dinero</legend>
-    <textarea name="attr_miscellaneous" style="width: 100%; height: 40px; background-color: #073642; color: white;">Dólares: 12</textarea>
+    <textarea name="attr_miscellaneous" style="width: 100%; height: 40px; background-color: #073642; color: white;">Dólares: 8</textarea>
   </fieldset>
 
   <!-- Varios -->
