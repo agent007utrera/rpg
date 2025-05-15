@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Base de datos - Sectarios de Cthulhu</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=IM+Fell+DW+Pica&display=swap');
+
+  body {
+    font-family: 'Cormorant Garamond', serif;
+    background: linear-gradient(135deg, #f0e9d2, #b9a77a);
+    color: #3b2f2f;
+    padding: 30px;
+    min-height: 100vh;
+  }
+
+  h1 {
+    font-family: 'IM Fell DW Pica', serif;
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 25px;
+    color: #4a372e;
+    text-shadow: 1px 1px 2px #c4b07b;
+  }
+
+  .buttons {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  button {
+    background-color: #5a4033;
+    color: #f0e9d2;
+    border: 2px solid #c4b07b;
+    padding: 10px 20px;
+    margin: 0 8px;
+    font-family: 'IM Fell DW Pica', serif;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px #8a7047;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #c4b07b;
+    color: #5a4033;
+    border-color: #5a4033;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 5px 5px 15px #6b5e3c88;
+    background: #efe6ca;
+    border: 1px solid #8a7047;
+  }
+
+  th, td {
+    border: 1px solid #8a7047;
+    padding: 12px 16px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #6b5e3c;
+    color: #efe6ca;
+    font-family: 'IM Fell DW Pica', serif;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    user-select: none;
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: #f7f1dc;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #ede4b4;
+  }
+
+  tbody tr:hover {
+    background-color: #c4b07b;
+    color: #3b2f2f;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+
+<h1>Base de datos - Sectarios de Cthulhu</h1>
+
+<div class="buttons">
+  <button onclick="sortTable(0)">Ordenar por Nombre</button>
+  <button onclick="sortTable(1, true)">Ordenar por Nota Media</button>
+  <button onclick="sortTable(2)">Ordenar por Época</button>
+  <button onclick="sortTable(3)">Ordenar por Sistema</button>
+  <button onclick="sortTable(4)">Ordenar por Campaña</button>
+</div>
+
+<table id="aventurasTable">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Nota media</th>
+      <th>Época</th>
+      <th>Sistema</th>
+      <th>Campaña</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Fragmentos de Terror</td><td>5.47</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Campaña</td></tr>
+    <tr><td>El Manicomio</td><td>6.05</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Aventuras</td></tr>
+    <tr><td>Solo contra el Wendigo</td><td>5.43</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Campaña</td></tr>
+    <tr><td>Solo contra la Oscuridad</td><td>5.33</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Campaña</td></tr>
+    <tr><td>El Terror que vino de las Estrellas</td><td>5.69</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Campaña</td></tr>
+    <tr><td>El Faro sin Luz</td><td>6.38</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Aventura</td></tr>
+    <tr><td>En busca de Kadath</td><td>6.18</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Campaña</td></tr>
+    <tr><td>Piel de Toro</td><td>7.07</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Campaña</td></tr>
+    <tr><td>Los Hongos de Yuggoth</td><td>6.38</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Campaña</td></tr>
+    <tr><td>Cristal de Bohemia</td><td>5.17</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Campaña</td></tr>
+    <tr><td>Las Tierras del Sueño</td><td>6.72</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Campaña</td></tr>
+    <tr><td>Las Sombras de Yog-Sothoth</td><td>6.36</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Campaña</td></tr>
+    <tr><td>El Rastro de Tsaghogghua</td><td>5.91</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Campaña</td></tr>
+    <tr><td>La Maldición de los Chthonians</td><td>6.07</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Campaña</td></tr>
+    <tr><td>La Semilla de Azathoth</td><td>5.81</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Campaña</td></tr>
+    <tr><td>Las Máscaras de Nyarlathotep</td><td>7.17</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Campaña</td></tr>
+    <tr><td>La Maldición Milenaria</td><td>5.55</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Campaña</td></tr>
+    <tr><td>Los Primigenios</td><td>6.85</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Campaña</td></tr>
+    <tr><td>Secretos de Arkham</td><td>7.72</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Campaña</td></tr>
+    <tr><td>Terror Austral</td><td>6.00</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Campaña</td></tr>
+    <tr><td>El Corazón del Horror</td><td>5.50</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Campaña</td></tr>
+    <tr><td>Cálculos Mortales</td><td>6.10</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Campaña</td></tr>
+    <tr><td>La Cosa en el Umbral</td><td>5.62</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Campaña</td></tr>
+    <tr><td>Huida de Innsmouth</td><td>7.50</td><td>Años 20</td><td>La Llamada de Cthulhu</td><td>Campaña</td></tr>
+  </tbody>
+</table>
+
+<script>
+  function sortTable(colIndex, isNumeric = false) {
+    const table = document.getElementById("aventurasTable");
+    const tbody = table.tBodies[0];
+    const rows = Array.from(tbody.rows);
+
+    let asc = table.ascOrder === undefined ? true : !table.ascOrder;
+    table.ascOrder = asc;
+
+    rows.sort((a, b) => {
+      let valA = a.cells[colIndex].textContent.trim();
+      let valB = b.cells[colIndex].textContent.trim();
+
+      if (isNumeric) {
+        valA = parseFloat(valA) || 0;
+        valB = parseFloat(valB) || 0;
+      } else {
+        valA = valA.toLowerCase();
+        valB = valB.toLowerCase();
+      }
+
+      if (valA < valB) return asc ? -1 : 1;
+      if (valA > valB) return asc ? 1 : -1;
+      return 0;
+    });
+
+    rows.forEach(row => tbody.appendChild(row));
+  }
+</script>
+
+</body>
+</html>
