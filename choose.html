@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Cthulhu - La Biblioteca Prohibida</title>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Crimson+Text:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-green: #0a1f1a;
+            --deep-black: #050505;
+            --parchment: #d4c3a1;
+            --eldritch-glow: #4ade80;
+        }
+
+        body {
+            background-color: var(--deep-black);
+            background-image: radial-gradient(circle, #1a2e26 0%, #050505 100%);
+            color: #2c1e16;
+            font-family: 'Special Elite', typewriter, serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            background: var(--parchment);
+            padding: 50px;
+            border: 2px solid #5d4a37;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 100px rgba(0,0,0,0.2);
+            position: relative;
+            background-image: url('https://www.transparenttextures.com/patterns/old-paper.png');
+        }
+
+        /* Adorno de esquinas */
+        .container::before {
+            content: "☠";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 20px;
+            opacity: 0.5;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px double #5d4a37;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .subtitle {
+            font-family: 'Crimson Text', serif;
+            font-style: italic;
+            font-size: 1.2em;
+        }
+
+        .book-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .book-item {
+            margin: 12px 0;
+            padding: 8px;
+            border-bottom: 1px dotted rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .book-item:hover {
+            background: rgba(0,0,0,0.05);
+            transform: translateX(10px);
+        }
+
+        .book-link {
+            text-decoration: none;
+            color: #2c1e16;
+            display: flex;
+            align-items: center;
+        }
+
+        .book-number {
+            font-weight: bold;
+            margin-right: 15px;
+            color: #5d4a37;
+            font-size: 1.1em;
+        }
+
+        .advanced-section {
+            margin-top: 40px;
+            border-top: 2px solid #5d4a37;
+            padding-top: 20px;
+        }
+
+        .advanced-title {
+            color: #8b0000;
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .advanced-item {
+            border: 1px double #8b0000;
+            background: rgba(139, 0, 0, 0.05);
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.8em;
+            opacity: 0.7;
+            font-style: italic;
+        }
+
+        /* Efecto de manchas de tinta */
+        .ink-stain {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 50%;
+            filter: blur(20px);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="ink-stain" style="top: 10%; right: 5%;"></div>
+        
+        <header>
+            <h1>Choose Cthulhu</h1>
+            <div class="subtitle">Expedientes de la Universidad de Miskatonic</div>
+        </header>
+
+        <ul class="book-list">
+            <li class="book-item"><a class="book-link" href="images/01_llamada.pdf" target="_blank"><span class="book-number">01</span> La llamada de Cthulhu</a></li>
+            <li class="book-item"><a class="book-link" href="images/02_montanas.pdf" target="_blank"><span class="book-number">02</span> En las montañas de la locura</a></li>
+            <li class="book-item"><a class="book-link" href="images/03_innsmouth.pdf" target="_blank"><span class="book-number">03</span> La sombra sobre Innsmouth</a></li>
+            <li class="book-item"><a class="book-link" href="images/04_ciudad.pdf" target="_blank"><span class="book-number">04</span> La ciudad sin nombre</a></li>
+            <li class="book-item"><a class="book-link" href="images/05_dunwich.pdf" target="_blank"><span class="book-number">05</span> El horror de Dunwich</a></li>
+            <li class="book-item"><a class="book-link" href="images/06_bruja.pdf" target="_blank"><span class="book-number">06</span> Los sueños de la casa de la bruja</a></li>
+            <li class="book-item"><a class="book-link" href="images/07_manicomio.pdf" target="_blank"><span class="book-number">07</span> El manicomio de Arkham</a></li>
+            <li class="book-item"><a class="book-link" href="images/08_color.pdf" target="_blank"><span class="book-number">08</span> El color que cayó del cielo</a></li>
+            <li class="book-item"><a class="book-link" href="images/09_ceremonial.pdf" target="_blank"><span class="book-number">09</span> El ceremonial</a></li>
+            <li class="book-item"><a class="book-link" href="images/10_susurra.pdf" target="_blank"><span class="book-number">10</span> El que susurra en la oscuridad</a></li>
+            <li class="book-item"><a class="book-link" href="images/11_tinieblas.pdf" target="_blank"><span class="book-number">11</span> El asiduo de las tinieblas</a></li>
+            <li class="book-item"><a class="book-link" href="images/12_umbral.pdf" target="_blank"><span class="book-number">12</span> El ser en el umbral</a></li>
+            <li class="book-item"><a class="book-link" href="images/13_sombra.pdf" target="_blank"><span class="book-number">13</span> La sombra de otro tiempo</a></li>
+            <li class="book-item"><a class="book-link" href="images/14_dexter.pdf" target="_blank"><span class="book-number">14</span> El caso de Charles Dexter Ward</a></li>
+        </ul>
+
+        <div class="advanced-section">
+            <div class="advanced-title">── SECCIÓN RESTRINGIDA ──</div>
+            <ul class="book-list">
+                <li class="book-item advanced-item">
+                    <a class="book-link" href="images/a01_rlyeh.pdf"  target="_blank" style="color: #8b0000;">
+                        <span class="book-number">ADV 01</span> Escape de R'lyeh
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <footer>
+            "Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn"<br>
+            Arkham, Massachusetts - 1926
+        </footer>
+    </div>
+
+</body>
+</html>
