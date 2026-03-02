@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathus</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --sw-blue: #00e5ff;
+            --sw-bg: #0a0a0a;
+            --sw-text: #e0e0e0;
+            --glow: 0 0 10px rgba(0, 229, 255, 0.7);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: #000;
+            background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000 100%);
+            color: var(--sw-text);
+            font-family: 'Rajdhani', sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .datapad-container {
+            width: 100%;
+            max-width: 900px;
+            border: 2px solid var(--sw-blue);
+            background-color: rgba(20, 20, 20, 0.9);
+            box-shadow: var(--glow), inset 0 0 20px rgba(0, 229, 255, 0.2);
+            padding: 20px;
+            position: relative;
+            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+        }
+
+        /* Scanlines */
+        .datapad-container::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+            z-index: 10;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        header {
+            border-bottom: 1px solid var(--sw-blue);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+        }
+
+        h1 { font-family: 'Orbitron', sans-serif; color: var(--sw-blue); text-shadow: var(--glow); text-transform: uppercase; }
+
+        .main-content { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; margin-bottom: 25px; }
+
+        .char-image-container { border: 1px solid var(--sw-blue); padding: 5px; background: rgba(0, 229, 255, 0.1); }
+        .char-image-container img { width: 100%; height: auto; display: block; filter: brightness(1.1) cyan; }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--sw-blue);
+            border-bottom: 1px solid var(--sw-blue);
+            margin: 20px 0 10px 0;
+            padding-bottom: 5px;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+        }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .stat-box { background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 10px; text-align: center; }
+        .stat-value { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: #fff; display: block; }
+        .stat-label { font-size: 0.8rem; color: var(--sw-blue); text-transform: uppercase; }
+
+        /* Estilo para las secciones de imágenes inferiores */
+        .img-box {
+            border: 1px solid #333;
+            padding: 10px;
+            background: rgba(0,0,0,0.4);
+            margin-bottom: 10px;
+        }
+        .img-box img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border: 1px solid #222;
+        }
+
+        .corner-deco { position: absolute; bottom: 10px; right: 10px; font-size: 0.7rem; color: var(--sw-blue); font-family: 'Orbitron', sans-serif; opacity: 0.6; }
+    </style>
+</head>
+<body>
+
+    <div class="datapad-container">
+        <header>
+            <div>
+
+<!-- ************** NOMBRE ************* -->
+
+                <h1>Mathus</h1>
+                <div style="text-transform: uppercase; letter-spacing: 2px;">Mecánico    |    Humano</div>
+            </div>
+            <div style="text-align: right; font-size: 0.8rem; opacity: 0.7;">
+                REF: BS-9920<br>SISTEMA: BORDE EXTERIOR
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="left-col">
+                <div class="char-image-container">
+
+<!-- ************** IMAGEN ************* -->
+
+                    <img src="images/mathus.jpg" alt="Mathus">
+                </div>
+            </div>
+
+            <div class="right-col">
+                <h3 class="section-title">Características</h3>
+                <div class="stats-grid">
+                    <div class="stat-box"><span class="stat-value">3</span><span class="stat-label">Fortaleza</span></div>
+                    <div class="stat-box"><span class="stat-value">2</span><span class="stat-label">Agilidad</span></div>
+                    <div class="stat-box"><span class="stat-value">4</span><span class="stat-label">Intelecto</span></div>
+                    <div class="stat-box"><span class="stat-value">2</span><span class="stat-label">Astucia</span></div>
+                    <div class="stat-box"><span class="stat-value">2</span><span class="stat-label">Voluntad</span></div>
+                    <div class="stat-box"><span class="stat-value">2</span><span class="stat-label">Presencia</span></div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="section-title">Historia</h3>
+        <div class="img-box">
+<!-- ************** HISTORIA ************* -->
+            <img src="images/mathus_story.jpg" alt="Historia">
+        </div>
+
+        <h3 class="section-title">Árbol de Talentos</h3>
+        <div class="img-box">
+
+<!-- ************** ÁRBOL ************* -->
+
+            <img src="images/mathus_tree.jpg" alt="Talentos">
+        </div>
+
+        <div class="corner-deco">AUREBESH_OS // VER_4.2</div>
+    </div>
+
+</body>
+</html>
