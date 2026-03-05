@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mathus</title>
+    <title>Mathus - Datapad</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
@@ -68,14 +68,47 @@
         .char-image-container { border: 1px solid var(--sw-blue); padding: 5px; background: rgba(0, 229, 255, 0.1); }
         .char-image-container img { width: 100%; height: auto; display: block; filter: brightness(1.1) cyan; }
 
-        .section-title {
+        /* Estilos para el Acordeón */
+        details {
+            margin-bottom: 10px;
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            background: rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        details[open] {
+            border: 1px solid var(--sw-blue);
+            box-shadow: 0 0 5px rgba(0, 229, 255, 0.2);
+        }
+
+        summary {
             font-family: 'Orbitron', sans-serif;
             color: var(--sw-blue);
-            border-bottom: 1px solid var(--sw-blue);
-            margin: 20px 0 10px 0;
-            padding-bottom: 5px;
+            padding: 15px;
+            cursor: pointer;
+            list-style: none; /* Quita la flecha por defecto */
             text-transform: uppercase;
             font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            outline: none;
+        }
+
+        /* Flecha personalizada */
+        summary::after {
+            content: "►";
+            font-size: 0.8rem;
+            transition: transform 0.3s;
+        }
+
+        details[open] summary::after {
+            transform: rotate(90deg);
+        }
+
+        summary:hover {
+            background: rgba(0, 229, 255, 0.1);
+            text-shadow: var(--glow);
         }
 
         .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
@@ -83,12 +116,9 @@
         .stat-value { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: #fff; display: block; }
         .stat-label { font-size: 0.8rem; color: var(--sw-blue); text-transform: uppercase; }
 
-        /* Estilo para las secciones de imágenes inferiores */
         .img-box {
-            border: 1px solid #333;
             padding: 10px;
             background: rgba(0,0,0,0.4);
-            margin-bottom: 10px;
         }
         .img-box img {
             width: 100%;
@@ -105,9 +135,6 @@
     <div class="datapad-container">
         <header>
             <div>
-
-<!-- ************** NOMBRE ************* -->
-
                 <h1>Mathus</h1>
                 <div style="text-transform: uppercase; letter-spacing: 2px;">Mecánico    |    Humano</div>
             </div>
@@ -119,15 +146,12 @@
         <div class="main-content">
             <div class="left-col">
                 <div class="char-image-container">
-
-<!-- ************** IMAGEN ************* -->
-
-                    <img src="images/mathus.jpg" alt="Mathus">
+                    <img src="images/mathus.jpg" alt="mathus">
                 </div>
             </div>
 
             <div class="right-col">
-                <h3 class="section-title">Características</h3>
+                <div style="font-family: 'Orbitron', sans-serif; color: var(--sw-blue); border-bottom: 1px solid var(--sw-blue); margin-bottom: 10px; padding-bottom: 5px; text-transform: uppercase;">Características</div>
                 <div class="stats-grid">
                     <div class="stat-box"><span class="stat-value">3</span><span class="stat-label">Fortaleza</span></div>
                     <div class="stat-box"><span class="stat-value">2</span><span class="stat-label">Agilidad</span></div>
@@ -139,24 +163,28 @@
             </div>
         </div>
 
-        <h3 class="section-title">Historia</h3>
-        <div class="img-box">
-<!-- ************** HISTORIA ************* -->
-            <img src="images/mathus_story.jpg" alt="Historia">
-        </div>
 
-        <h3 class="section-title">Habilidades</h3>
-        <div class="img-box">
-            <img src="images/mathus_hab.jpg" alt="Habilidades">
-        </div>
 
-        <h3 class="section-title">Árbol de Talentos</h3>
-        <div class="img-box">
+        <details>
+            <summary>Habilidades</summary>
+            <div class="img-box">
+                <img src="images/mathus_hab.jpg" alt="Habilidades">
+            </div>
+        </details>
 
-<!-- ************** ÁRBOL ************* -->
+        <details>
+            <summary>Árbol de Talentos</summary>
+            <div class="img-box">
+                <img src="images/mathus_tree.jpg" alt="Talentos">
+            </div>
+        </details>
 
-            <img src="images/mathus_tree.jpg" alt="Talentos">
-        </div>
+        <details>
+            <summary>Historia</summary>
+            <div class="img-box">
+                <img src="images/mathus_story.jpg" alt="Historia">
+            </div>
+        </details>
 
         <div class="corner-deco">AUREBESH_OS // VER_4.2</div>
     </div>
