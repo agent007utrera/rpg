@@ -24,7 +24,8 @@
             color: var(--sw-text);
             font-family: 'Rajdhani', sans-serif;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
             padding: 20px;
             min-height: 100vh;
         }
@@ -38,6 +39,7 @@
             padding: 20px;
             position: relative;
             clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+            margin-bottom: 20px;
         }
 
         /* Scanlines */
@@ -86,7 +88,7 @@
             color: var(--sw-blue);
             padding: 15px;
             cursor: pointer;
-            list-style: none; /* Quita la flecha por defecto */
+            list-style: none;
             text-transform: uppercase;
             font-size: 1.1rem;
             display: flex;
@@ -95,7 +97,6 @@
             outline: none;
         }
 
-        /* Flecha personalizada */
         summary::after {
             content: "►";
             font-size: 0.8rem;
@@ -127,6 +128,26 @@
             border: 1px solid #222;
         }
 
+        /* Estilo para el botón de volver */
+        .btn-back {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--sw-blue);
+            text-decoration: none;
+            border: 1px solid var(--sw-blue);
+            padding: 10px 20px;
+            transition: 0.3s;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            background: transparent;
+            margin-bottom: 20px;
+        }
+
+        .btn-back:hover {
+            background: var(--sw-blue);
+            color: #000;
+            box-shadow: var(--glow);
+        }
+
         .corner-deco { position: absolute; bottom: 10px; right: 10px; font-size: 0.7rem; color: var(--sw-blue); font-family: 'Orbitron', sans-serif; opacity: 0.6; }
     </style>
 </head>
@@ -136,7 +157,7 @@
         <header>
             <div>
                 <h1>41-VEX</h1>
-                <div style="text-transform: uppercase; letter-spacing: 2px;">Colono   |    Droide</div>
+                <div style="text-transform: uppercase; letter-spacing: 2px;">Médico   |    Droide</div>
             </div>
             <div style="text-align: right; font-size: 0.8rem; opacity: 0.7;">
                 REF: BS-9920<br>SISTEMA: BORDE EXTERIOR
@@ -146,14 +167,14 @@
         <div class="main-content">
             <div class="left-col">
                 <div class="char-image-container">
-                    <img src="images/vex.jpg" alt="Pash">
+                    <img src="images/vex.jpg" alt="41-Vex">
                 </div>
             </div>
 
             <div class="right-col">
                 <div style="font-family: 'Orbitron', sans-serif; color: var(--sw-blue); border-bottom: 1px solid var(--sw-blue); margin-bottom: 10px; padding-bottom: 5px; text-transform: uppercase;">Características</div>
                 <div class="stats-grid">
-                      <div class="stat-box"><span class="stat-value">2</span><span class="stat-label">Fortaleza</span></div>
+                    <div class="stat-box"><span class="stat-value">2</span><span class="stat-label">Fortaleza</span></div>
                     <div class="stat-box"><span class="stat-value">2</span><span class="stat-label">Agilidad</span></div>
                     <div class="stat-box"><span class="stat-value">4</span><span class="stat-label">Intelecto</span></div>
                     <div class="stat-box"><span class="stat-value">1</span><span class="stat-label">Astucia</span></div>
@@ -162,8 +183,6 @@
                 </div>
             </div>
         </div>
-
-
 
         <details>
             <summary>Habilidades</summary>
@@ -188,6 +207,34 @@
 
         <div class="corner-deco">AUREBESH_OS // VER_4.2</div>
     </div>
+
+    <a href="index.html" class="btn-back" id="back-link">◄ Volver a la Terminal</a>
+
+    <audio id="click-sound" src="images/click.mp3" preload="auto"></audio>
+
+    <script>
+        const clickSound = document.getElementById('click-sound');
+        
+        // 1. Sonido para los desplegables (summary)
+        const summaries = document.querySelectorAll('summary');
+        summaries.forEach(item => {
+            item.addEventListener('click', () => {
+                clickSound.currentTime = 0; 
+                clickSound.play();
+            });
+        });
+
+        // 2. Sonido para el enlace de vuelta
+        const backLink = document.getElementById('back-link');
+        backLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetUrl = this.href;
+            clickSound.play();
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 150);
+        });
+    </script>
 
 </body>
 </html>

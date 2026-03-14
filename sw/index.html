@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terminal de Acceso</title>
+    <title>Terminal de Acceso - El Colmillo de Krayt</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
@@ -78,6 +78,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            cursor: pointer;
             clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%);
         }
 
@@ -149,7 +150,7 @@
 <body>
 
     <div class="terminal-header">
-        <h1>Tripulación de: "El Colmillo de Krayt</h1>
+        <h1>Tripulación de: "El Colmillo de Krayt"</h1>
         <p>Seleccione un perfil para acceder a los datos</p>
     </div>
 
@@ -198,6 +199,30 @@
     </div>
 
     <div class="footer-deco">CORE_SYSTEM_ACCESS // ENCRYPTED_LINK_0.4</div>
+
+    <audio id="click-sound" src="images/click.mp3" preload="auto"></audio>
+
+    <script>
+        const cards = document.querySelectorAll('.char-card');
+        const clickSound = document.getElementById('click-sound');
+
+        cards.forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Detenemos la navegación inmediata
+                e.preventDefault();
+                const targetUrl = this.href;
+
+                // Reproducimos el efecto de sonido
+                clickSound.currentTime = 0; // Reinicia si se pulsa muy rápido
+                clickSound.play();
+
+                // Navegamos tras un pequeño delay para que se oiga el clic
+                setTimeout(() => {
+                    window.location.href = targetUrl;
+                }, 150);
+            });
+        });
+    </script>
 
 </body>
 </html>

@@ -24,7 +24,8 @@
             color: var(--sw-text);
             font-family: 'Rajdhani', sans-serif;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
             padding: 20px;
             min-height: 100vh;
         }
@@ -38,6 +39,7 @@
             padding: 20px;
             position: relative;
             clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+            margin-bottom: 20px;
         }
 
         /* Scanlines */
@@ -86,7 +88,7 @@
             color: var(--sw-blue);
             padding: 15px;
             cursor: pointer;
-            list-style: none; /* Quita la flecha por defecto */
+            list-style: none;
             text-transform: uppercase;
             font-size: 1.1rem;
             display: flex;
@@ -95,7 +97,6 @@
             outline: none;
         }
 
-        /* Flecha personalizada */
         summary::after {
             content: "►";
             font-size: 0.8rem;
@@ -125,6 +126,24 @@
             height: auto;
             display: block;
             border: 1px solid #222;
+        }
+
+        .btn-back {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--sw-blue);
+            text-decoration: none;
+            border: 1px solid var(--sw-blue);
+            padding: 10px 20px;
+            transition: 0.3s;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            background: transparent;
+        }
+
+        .btn-back:hover {
+            background: var(--sw-blue);
+            color: #000;
+            box-shadow: var(--glow);
         }
 
         .corner-deco { position: absolute; bottom: 10px; right: 10px; font-size: 0.7rem; color: var(--sw-blue); font-family: 'Orbitron', sans-serif; opacity: 0.6; }
@@ -163,8 +182,6 @@
             </div>
         </div>
 
-
-
         <details>
             <summary>Habilidades</summary>
             <div class="img-box">
@@ -188,6 +205,34 @@
 
         <div class="corner-deco">AUREBESH_OS // VER_4.2</div>
     </div>
+
+    <a href="index.html" class="btn-back" id="back-link">◄ Volver a la Terminal</a>
+
+    <audio id="click-sound" src="images/click.mp3" preload="auto"></audio>
+
+    <script>
+        const clickSound = document.getElementById('click-sound');
+        
+        // 1. Sonido para los desplegables
+        const summaries = document.querySelectorAll('summary');
+        summaries.forEach(item => {
+            item.addEventListener('click', () => {
+                clickSound.currentTime = 0;
+                clickSound.play();
+            });
+        });
+
+        // 2. Sonido para el botón volver (con delay para que se oiga)
+        const backLink = document.getElementById('back-link');
+        backLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetUrl = this.href;
+            clickSound.play();
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 150);
+        });
+    </script>
 
 </body>
 </html>
