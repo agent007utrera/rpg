@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Clave y Código</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 450px;
+        }
+        h2 {
+            color: #1a73e8;
+            text-align: center;
+            margin-top: 0;
+        }
+        .group {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            border-color: #1a73e8;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: opacity 0.3s;
+        }
+        .btn-encode { background-color: #1a73e8; color: white; }
+        .btn-decode { background-color: #34a853; color: white; }
+        button:hover { opacity: 0.9; }
+        
+        .result-box {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-left: 4px solid #1a73e8;
+            min-height: 20px;
+            word-break: break-all;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>🔐 Conversor Bidireccional</h2>
+
+    <div class="group">
+        <label>De Texto a Código:</label>
+        <input type="text" id="textInput" placeholder="Escribe tu clave...">
+        <button class="btn-encode" onclick="encode()">Convertir a Código</button>
+        <div class="result-box" id="encodedResult">Esperando texto...</div>
+    </div>
+
+    <div class="group">
+        <label>De Código a Texto:</label>
+        <input type="text" id="codeInput" placeholder="Pega el código aquí...">
+        <button class="btn-decode" onclick="decode()">Convertir a Clave</button>
+        <div class="result-box" id="decodedResult" style="border-left-color: #34a853;">Esperando código...</div>
+    </div>
+</div>
+
+<script>
+    // Función para convertir Texto -> Código (Base64)
+    function encode() {
+        const input = document.getElementById('textInput').value;
+        if (!input) {
+            alert("Por favor escribe algo");
+            return;
+        }
+        // btoa convierte texto a Base64
+        const result = btoa(unescape(encodeURIComponent(input)));
+        document.getElementById('encodedResult').innerText = result;
+    }
+
+    // Función para convertir Código -> Texto (Base64)
+    function decode() {
+        const input = document.getElementById('codeInput').value;
+        if (!input) {
+            alert("Por favor pega un código");
+            return;
+        }
+        try {
+            // atob convierte Base64 de vuelta a texto
+            const result = decodeURIComponent(escape(atob(input)));
+            document.getElementById('decodedResult').innerText = result;
+        } catch (e) {
+            document.getElementById('decodedResult').innerText = "❌ Error: El código no es válido.";
+        }
+    }
+</script>
+
+</body>
+</html>

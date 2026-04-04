@@ -194,8 +194,6 @@
         </div>
     </div>
 
-    <script src="secretos.js"></script>
-
     <script>
         const quotes = [
             '"No está muerto lo que puede yacer eternamente, y con los eones extraños incluso la muerte puede morir."',
@@ -218,6 +216,33 @@
             document.getElementById('errorArea').style.display = "none";
             document.getElementById('passInput').value = "";
             document.getElementById('secretModal').style.display = "block";
+        }
+
+        // Lógica de validación mediante Base64 (basada en generador.html)
+        function checkPass() {
+            const passInput = document.getElementById('passInput');
+            const pass = passInput.value.trim();
+            const soundCorrecto = document.getElementById('soundCorrecto');
+            const soundError = document.getElementById('soundError');
+
+            if (!pass) return;
+
+            // Codificamos
+            const encodedPass = btoa(unescape(encodeURIComponent(pass)));
+            const selloArcano = "MTcyNA==";
+
+            if (encodedPass === selloArcano) {
+                if (soundCorrecto) soundCorrecto.play();
+                setTimeout(() => {
+                    window.location.href = "enc_biblioteca.html";
+                }, 500);
+            } else {
+                if (soundError) soundError.play();
+                document.getElementById('modalStatus').innerText = "ERROR ARCANO";
+                document.getElementById('modalMsg').innerText = "La clave es errónea. Los Antiguos acechan.";
+                document.getElementById('inputArea').style.display = "none";
+                document.getElementById('errorArea').style.display = "block";
+            }
         }
 
         function closeModal() {
