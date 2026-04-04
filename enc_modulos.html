@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MÓDULOS DE ROL - SECTARIOS DE CTHULHU</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=IM+Fell+DW+Pica&display=swap');
+
+  body {
+    font-family: 'Cormorant Garamond', serif;
+    background: linear-gradient(135deg, #f0e9d2, #b9a77a);
+    color: #3b2f2f;
+    padding: 30px;
+    min-height: 100vh;
+  }
+
+  h1 {
+    font-family: 'IM Fell DW Pica', serif;
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 25px;
+    color: #4a372e;
+    text-shadow: 1px 1px 2px #c4b07b;
+  }
+
+  .buttons {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  button {
+    background-color: #5a4033;
+    color: #f0e9d2;
+    border: 2px solid #c4b07b;
+    padding: 10px 20px;
+    margin: 0 8px;
+    font-family: 'IM Fell DW Pica', serif;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px #8a7047;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #c4b07b;
+    color: #5a4033;
+    border-color: #5a4033;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 5px 5px 15px #6b5e3c88;
+    background: #efe6ca;
+    border: 1px solid #8a7047;
+  }
+
+  th, td {
+    border: 1px solid #8a7047;
+    padding: 12px 16px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #6b5e3c;
+    color: #efe6ca;
+    font-family: 'IM Fell DW Pica', serif;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    user-select: none;
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: #f7f1dc;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #ede4b4;
+  }
+
+  tbody tr:hover {
+    background-color: #c4b07b;
+    color: #3b2f2f;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+
+<h1>Sectarios de Cthulhu - Módulos de rol</h1>
+
+<div class="buttons">
+  <button onclick="sortTable(0)">Ordenar por Nombre</button>
+  <button onclick="sortTable(1, true)">Ordenar por Nota Media</button>
+  <button onclick="sortTable(2)">Ordenar por Época</button>
+  <button onclick="sortTable(3)">Ordenar por Sistema</button>
+  <button onclick="sortTable(4)">Ordenar por Tipo</button>
+</div>
+
+<table id="aventurasTable">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Nota media</th>
+      <th>Época</th>
+      <th>Sistema</th>
+      <th>Tipo</th>
+    </tr>
+  </thead>
+  <tbody>
+
+
+    <tr><td>Fragmentos de Terror</td><td>5.47</td><td>Años 20</td><td>D100</td><td>Aventuras</td></tr>
+    <tr><td>El Manicomio</td><td>6.05</td><td>Años 20</td><td>D100</td><td>Aventuras</td></tr>
+    <tr><td>Solo contra el Wendigo</td><td>5.43</td><td>Años 20</td><td>D100</td><td>Librojuego</td></tr>
+    <tr><td>Solo contra la Oscuridad</td><td>5.33</td><td>Años 20</td><td>D100</td><td>Librojuego</td></tr>
+    <tr><td>El Terror que vino de las Estrellas</td><td>5.69</td><td>Años 20</td><td>D100</td><td>Aventuras</td></tr>
+    <tr><td>El Faro sin Luz</td><td>6.38</td><td>Años 20</td><td>Séptima</td><td>Aventura (one-shot)</td></tr>
+    <tr><td>En busca de Kadath</td><td>6.18</td><td>Años 20</td><td>D100</td><td>Aventuras</td></tr>
+    <tr><td>La Piel de Toro</td><td>7.07</td><td>Años 20</td><td>D100</td><td>Guía y aventuras</td></tr>
+    <tr><td>Los Hongos de Yuggoth</td><td>6.38</td><td>Años 20</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>Cristal de Bohemia</td><td>5.17</td><td>Años 20</td><td>D100</td><td>Aventuras</td></tr>
+    <tr><td>Las Tierras del Sueño</td><td>6.72</td><td>Años 20</td><td>D100</td><td>Guía y aventuras</td></tr>
+    <tr><td>Las Sombras de Yog-Sothoth</td><td>6.36</td><td>Años 20</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>El Rastro de Tsaghogghua</td><td>5.91</td><td>Años 20</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>La Maldición de los Chthonians</td><td>6.07</td><td>Años 20</td><td>D100</td><td>Aventuras</td></tr>
+    <tr><td>La Semilla de Azathoth</td><td>5.81</td><td>Años 20</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>Las Máscaras de Nyarlathotep</td><td>7.17</td><td>Años 20</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>El Guardián de los Arcanos</td><td>5.55</td><td>Años 20</td><td>D100</td><td>Pantalla y aventuras (one-shot)</td></tr>
+    <tr><td>Los Primigenios</td><td>6.85</td><td>Años 20</td><td>D100</td><td>Aventuras</td></tr>
+    <tr><td>Secretos de Arkham</td><td>7.72</td><td>Años 20</td><td>D100</td><td>Guía y aventuras</td></tr>
+    <tr><td>Terror Austral</td><td>6.00</td><td>Años 20</td><td>D100</td><td>Guía y aventuras</td></tr>
+    <tr><td>El Corazón del Horror</td><td>5.50</td><td>Años 20</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>Cálculos Mortales</td><td>6.10</td><td>Años 20</td><td>D100</td><td>Aventuras</td></tr>
+    <tr><td>La Cosa en el Umbral</td><td>5.62</td><td>Años 20</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>Huida de Innsmouth</td><td>7.50</td><td>Años 20</td><td>D100</td><td>Guía y aventuras</td></tr>
+    <tr><td>¡No Sobre Nosotros!</td><td>6.3</td><td>Años 20</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>Oscuros Designios</td><td>5.77</td><td>Victoriana</td><td>D100</td><td>Aventuras</td></tr>
+    <tr><td>La Serpiente de Dos Cabezas</td><td>6.66</td><td>Años 30</td><td>Séptima</td><td>Campaña</td></tr>
+    <tr><td>El Caso del Crimen del Contable</td><td>5.90</td><td>Victoriana</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>La Sombra de Saros</td><td>6.57</td><td>Años 20</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>La Bestia no debe nacer</td><td>5.21</td><td>Años 20</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>La Isla Secreta</td><td>5.50</td><td>Actual</td><td>D100</td><td>Aventura</td></tr>
+    <tr><td>Dunwich - Regreso al pueblo olvidado</td><td>6.81</td><td>Años 20</td><td>D100</td><td>Guía</td></tr>
+    <tr><td>La Broma Macabra</td><td>6.55</td><td>Años 20</td><td>D100</td><td>Aventura</td></tr>
+    <tr><td>La Aurora Dorada</td><td>7.62</td><td>Victoriana</td><td>D100</td><td>Guía y aventuras</td></tr>
+    <tr><td>Amos ocultos</td><td>5.45</td><td>Actual</td><td>D100</td><td>Aventuras</td></tr>
+    <tr><td>El Reinado del Terror</td><td>5.66</td><td>Antiguo Régimen</td><td>Séptima</td><td>Campaña</td></tr>
+    <tr><td>Delta Green - Aventuras</td><td>7.10</td><td>Actual</td><td>D100</td><td>Aventuras</td></tr>
+    <tr><td>Kingsport - La ciudad en las brumas</td><td>6.28</td><td>Años 20</td><td>D100</td><td>Guía y aventuras</td></tr>
+    <tr><td>Cerrando el círculo</td><td>6.40</td><td>Años 20</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>Más allá de las Montañas de la Locura</td><td>7.61</td><td>Años 30</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>Las Mansiones de la Locura</td><td>6.27</td><td>Años 20</td><td>D100</td><td>Aventuras</td></tr>
+    <tr><td>246 Corbitt Street</td><td>5.25</td><td>Actual</td><td>Séptima</td><td>Aventura</td></tr>
+    <tr><td>Vástagos de Shub-Niggurath</td><td>5.81</td><td>Actual</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>Secretos</td><td>5.33</td><td>Actual</td><td>D100</td><td>Aventuras</td></tr>
+    <tr><td>Fundido en blanco</td><td>6.10</td><td>Actual</td><td>Hitos</td><td>Guía</td></tr>
+    <tr><td>El Hombre de Mimbre</td><td>6.55</td><td>Años 20</td><td>D100</td><td>Aventura</td></tr>
+    <tr><td>El Aullido de las Quimeras</td><td>4.66</td><td>Victoriana</td><td>Séptima</td><td>Campaña</td></tr>
+    <tr><td>Nocturnum</td><td>6.70</td><td>Actual</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>El Hospicio</td><td>5.62</td><td>Años 20</td><td>Séptima</td><td>Aventura</td></tr>
+    <tr><td>Secretos de Japón</td><td>7.50</td><td>Actual</td><td>D100</td><td>Guía y aventuras</td></tr>
+    <tr><td>La Maldición de Nínive</td><td>5.62</td><td>Años 20</td><td>Séptima</td><td>Campaña</td></tr>
+    <tr><td>El Rey de Chicago</td><td>5.16</td><td>Años 20</td><td>D100</td><td>Aventuras</td></tr>
+    <tr><td>El arte de la locura</td><td>5.57</td><td>Años 20</td><td>D100</td><td>Aventura</td></tr>
+    <tr><td>Secretos de Nueva York</td><td>5.80</td><td>Años 20</td><td>D100</td><td>Guía y aventuras</td></tr>
+    <tr><td>Hijos de Nyarlathotep</td><td>5.88</td><td>Actual</td><td>Hitos</td><td>Campaña</td></tr>
+    <tr><td>Cthulhu Apocalipsis</td><td>4.60</td><td>Futuro</td><td>Gumshoe</td><td>Guía y aventuras</td></tr>
+    <tr><td>Horror en el Orient-Express</td><td>6.38</td><td>Años 20</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>Tiempo de Cosecha</td><td>5.66</td><td>Años 20</td><td>Séptima</td><td>Campaña</td></tr>
+    <tr><td>Acólitos</td><td>2.50</td><td>Actual</td><td>D100</td><td>Aventuras</td></tr>
+    <tr><td>Historias del Valle del Miskatonic</td><td>5.75</td><td>Años 20</td><td>D100</td><td>Aventuras</td></tr>
+    <tr><td>Sombras de la Atlántida</td><td>7.1</td><td>Segunda Guerra Mundial</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>Nuestras Señoras del Pesar</td><td>7.75</td><td>Actual</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>La Maldición del Signo Amarillo</td><td>5.22</td><td>Varias</td><td>Hitos</td><td>Aventuras</td></tr>
+    <tr><td>Tambores de Guerra</td><td>2.6</td><td>Años 20</td><td>Hitos</td><td>Campaña</td></tr>
+    <tr><td>Horror en el Orient Express (EDGE)</td><td>5.92</td><td>Años 20</td><td>Séptima</td><td>Campaña</td></tr>
+    <tr><td>Un Futuro Perfecto</td><td>6.4</td><td>Actual</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>Los Misterios de Mesoamérica</td><td>5.75</td><td>Años 20</td><td>D100</td><td>Guía y aventuras</td></tr>
+    <tr><td>¡Glozel es Auténtico!</td><td>4</td><td>Años 20</td><td>D100</td><td>Aventuras</td></tr>
+    <tr><td>Tierra de Nadie</td><td>5.57</td><td>Gran Guerra</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>Una Planta de lo Más Espeluznante</td><td>4</td><td>Actual</td><td>D100</td><td>Aventura</td></tr>
+    <tr><td>Atlantis</td><td>4.57</td><td>Años 20</td><td>D100</td><td>Aventura</td></tr>
+    <tr><td>La Tumba de Eibon</td><td>4</td><td>Años 20</td><td>D100</td><td>Aventura</td></tr>
+    <tr><td>El Manuscrito Tolkien</td><td>4</td><td>Años 20</td><td>D100</td><td>Aventura</td></tr>
+    <tr><td>Un Llanto Desesperado</td><td>6.71</td><td>Actual</td><td>Séptima</td><td>Aventura</td></tr>
+    <tr><td>Muerte en Dunwich</td><td>4.16</td><td>Años 20</td><td>D100</td><td>Aventura</td></tr>
+    <tr><td>Un Fuego Frío en el Abismo</td><td>5.22</td><td>Años 20</td><td>Séptima</td><td>Campaña</td></tr>
+    <tr><td>El Rastro de Cthulhu</td><td>5.64</td><td>Años 30</td><td>Gumshoe</td><td>Reglas y aventuras</td></tr>
+    <tr><td>Cazadores de Libros de Londres</td><td>5.12</td><td>Años 30</td><td>Gumshoe</td><td>Reglas y aventuras</td></tr>
+    <tr><td>Estigma de Locura</td><td>5.66</td><td>Años 20</td><td>D100</td><td>Reglas y aventuras</td></tr>
+    <tr><td>Asombrosos Relatos Arcanos</td><td>3.6</td><td>Años 30</td><td>Gumshoe</td><td>Aventuras</td></tr>
+    <tr><td>Un Puñado de Polvo</td><td>5.66</td><td>Actual</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>Asombrosos Relatos Detectivescos</td><td>5.16</td><td>Años 30</td><td>Gumshoe</td><td>Aventuras</td></tr>
+    <tr><td>Cazadores de Sueños de París</td><td>4.16</td><td>Años 30</td><td>Gumshoe</td><td>Reglas y aventuras</td></tr>
+    <tr><td>Extraños Evos</td><td>5.12</td><td>Varias</td><td>D100</td><td>Aventuras</td></tr>
+    <tr><td>El Triángulo de las Bermudas</td><td>5.62</td><td>Actual</td><td>D100</td><td>Guía y aventuras</td></tr>
+    <tr><td>Edad Oscura</td><td>5</td><td>Medieval</td><td>D100</td><td>Reglas y aventuras</td></tr>
+    <tr><td>Aventuras en la Tierra de Arkham</td><td>6.71</td><td>Años 20</td><td>D100</td><td>Aventuras</td></tr>
+    <tr><td>Silent Hill</td><td>6.33</td><td>Actual</td><td>D20</td><td>Guía</td></tr>
+    <tr><td>El Siniestro Pueblo de Karpino</td><td>5.83</td><td>Años 20</td><td>D100</td><td>Aventura</td></tr>
+    <tr><td>Cthulhu for President!</td><td>6</td><td>Años 20</td><td>D100</td><td>Aventura</td></tr>
+    <tr><td>Oro Negro, Tumba Azul</td><td>5.33</td><td>Actual</td><td>D100</td><td>Aventura</td></tr>
+    <tr><td>Cultos Innombrables</td><td>5.25</td><td>Actual</td><td>Hitos</td><td>Reglas y aventuras</td></tr>
+    <tr><td>Abuelito Serpiente Yig</td><td>3</td><td>Fantasía Medieval</td><td>Séptima</td><td>Campaña</td></tr>
+    <tr><td>Sombras sobre Escocia</td><td>6</td><td>Años 20</td><td>D100</td><td>Guía y aventuras</td></tr>
+    <tr><td>Guía de El Cairo</td><td>5.5</td><td>Años 20</td><td>D100</td><td>Guía</td></tr>
+    <tr><td>Terror Austral (EDGE)</td><td>6.72</td><td>Años 20</td><td>Séptima</td><td>Guía y aventuras</td></tr>
+    <tr><td>Nazarene's Lot</td><td>5</td><td>Actual</td><td>D100</td><td>Aventura</td></tr>
+    <tr><td>White Dwarf</td><td>6</td><td>Varias</td><td>Varios</td><td>Revista y aventuras</td></tr>
+    <tr><td>Guía de Londres</td><td>6</td><td>Años 20</td><td>D100</td><td>Guía y aventuras</td></tr>
+    <tr><td>La Llamada de Cthulhu (JOC)</td><td>7.57</td><td>Años 20</td><td>D100</td><td>Reglas y aventuras</td></tr>
+    <tr><td>La Llamada de Cthulhu (La Factoría)</td><td>6.84</td><td>Años 20</td><td>D100</td><td>Reglas y aventuras</td></tr>
+    <tr><td>La Llamada de Cthulhu (EDGE)</td><td>5.54</td><td>Años 20</td><td>D100</td><td>Reglas y aventuras</td></tr>
+    <tr><td>La Llamada de Cthulhu (Séptima)</td><td>7.74</td><td>Años 20</td><td>Séptima</td><td>Reglas y aventuras</td></tr>
+    <tr><td>El Manual del Guardián I</td><td>6.47</td><td>Varias</td><td>D100</td><td>Reglas</td></tr>
+    <tr><td>El Manual del Guardián II</td><td>5.7</td><td>Varias</td><td>D100</td><td>Reglas</td></tr>
+    <tr><td>Guía del Investigador de los Años 20 (La Factoría)</td><td>6.61</td><td>Años 20</td><td>D100</td><td>Guía</td></tr>
+    <tr><td>Delta Green</td><td>6.82</td><td>Actual</td><td>D100</td><td>Reglas</td></tr>
+    <tr><td>Cthulhu Actual</td><td>5.54</td><td>Actual</td><td>D100</td><td>Reglas y aventuras</td></tr>
+    <tr><td>Armas para Investigadores I</td><td>6.5</td><td>Años 20</td><td>D100</td><td>Reglas</td></tr>
+    <tr><td>Armas para Investigadores II</td><td>5.66</td><td>Actual</td><td>D100</td><td>Reglas</td></tr>
+    <tr><td>Guía de Nueva Orleáns</td><td>6.5</td><td>Años 20</td><td>D100</td><td>Guía y aventuras</td></tr>
+    <tr><td>Perlas Ensangrentadas</td><td>4.42</td><td>Años 80</td><td>Séptima</td><td>Aventura</td></tr>
+    <tr><td>La Transición</td><td>5.71</td><td>Años 80</td><td>Séptima</td><td>Guía y aventuras</td></tr>
+    <tr><td>Sombras de Leningrado</td><td>5.11</td><td>Años 20</td><td>D100</td><td>Aventura</td></tr>
+    <tr><td>Una Resección en el Tiempo</td><td>5.4</td><td>Actual</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>Las Cosas que Dejamos Atrás</td><td>6.64</td><td>Actual</td><td>Séptima</td><td>Aventuras</td></tr>
+    <tr><td>El Legado Nogunaba</td><td>6.25</td><td>Años 50</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>Sombras sobre Filmland</td><td>4.85</td><td>Años 30</td><td>Gumshoe</td><td>Aventuras</td></tr>
+    <tr><td>Hellraiser</td><td>3.28</td><td>Actual</td><td>D20</td><td>Reglas</td></tr>
+    <tr><td>Los Archivos de Umbrella</td><td>4.25</td><td>Actual</td><td>D20</td><td>Reglas</td></tr>
+    <tr><td>El Día de la Bestia</td><td>5.27</td><td>Años 20</td><td>D100</td><td>Campaña</td></tr>
+    <tr><td>CthulhuTech</td><td>4</td><td>Futuro</td><td>Framewerk</td><td>Reglas y aventuras</td></tr>
+    <tr><td>Pequeñas Chispas</td><td>4.75</td><td>Actual</td><td>Séptima</td><td>Aventura</td></tr>
+    <tr><td>La Piedra del Sueño</td><td>4.66</td><td>Años 20</td><td>D100</td><td>Campaña</td></tr>
+
+
+  </tbody>
+</table>
+
+<script>
+  function sortTable(colIndex, isNumeric = false) {
+    const table = document.getElementById("aventurasTable");
+    const tbody = table.tBodies[0];
+    const rows = Array.from(tbody.rows);
+
+    let asc = table.ascOrder === undefined ? true : !table.ascOrder;
+    table.ascOrder = asc;
+
+    rows.sort((a, b) => {
+      let valA = a.cells[colIndex].textContent.trim();
+      let valB = b.cells[colIndex].textContent.trim();
+
+      if (isNumeric) {
+        valA = parseFloat(valA) || 0;
+        valB = parseFloat(valB) || 0;
+      } else {
+        valA = valA.toLowerCase();
+        valB = valB.toLowerCase();
+      }
+
+      if (valA < valB) return asc ? -1 : 1;
+      if (valA > valB) return asc ? 1 : -1;
+      return 0;
+    });
+
+    rows.forEach(row => tbody.appendChild(row));
+  }
+</script>
+
+</body>
+</html>

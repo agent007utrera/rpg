@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PELÍCULAS - SECTARIOS DE CTHULHU</title>
+    <style>
+        :root {
+            --netflix-red: #E50914;
+            --netflix-black: #141414;
+            --netflix-grey: #2F2F2F;
+            --text-white: #FFFFFF;
+            --text-grey: #B3B3B3;
+        }
+
+        body {
+            background-color: var(--netflix-black);
+            color: var(--text-white);
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: var(--netflix-red);
+            text-align: center;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        /* Controles Superiores */
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background-color: var(--netflix-grey);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            transition: background 0.3s;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            background-color: var(--netflix-red);
+        }
+
+        #searchBtn {
+            background-color: var(--netflix-red);
+        }
+
+        /* Tabla Estilo Netflix */
+        .table-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        th {
+            background-color: var(--netflix-black);
+            padding: 15px;
+            text-align: left;
+            border-bottom: 2px solid var(--netflix-grey);
+            color: var(--text-grey);
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--netflix-grey);
+            font-size: 0.95rem;
+        }
+
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .nota-badge {
+            background: #46d369;
+            color: black;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        /* Estilo Popup (Modal) con SCROLL HABILITADO */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.85);
+            backdrop-filter: blur(5px);
+            /* Permite el scroll si el contenido es más alto que la ventana */
+            overflow-y: auto; 
+        }
+
+        .modal-content {
+            background-color: #181818;
+            /* Margen superior e inferior para que no se pegue a los bordes al hacer scroll */
+            margin: 50px auto; 
+            padding: 40px;
+            width: 85%;
+            max-width: 500px;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0px 0px 30px rgba(0,0,0,0.7);
+            text-align: center;
+        }
+
+        .modal-content h2 {
+            margin-top: 0;
+            color: var(--text-white);
+            font-size: 2rem;
+        }
+
+        .modal-data {
+            text-align: left;
+            margin: 20px 0;
+            line-height: 1.8;
+            color: var(--text-grey);
+            border-top: 1px solid var(--netflix-grey);
+            padding-top: 20px;
+        }
+
+        .modal-data b {
+            color: var(--text-white);
+        }
+
+        .close-btn {
+            background-color: var(--text-white);
+            color: black;
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-size: 1rem;
+            margin-top: 20px;
+            width: 100%;
+            cursor: pointer;
+            border: none;
+            font-weight: bold;
+        }
+
+        .close-btn:hover {
+            background-color: #e6e6e6;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid var(--netflix-grey);
+            background: #333;
+            color: white;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>CTHULHUFLIX - PELÍCULAS</h1>
+
+    <div class="controls">
+        <input type="text" id="searchInput" placeholder="Buscar título...">
+        <button id="searchBtn" onclick="openSearch()">BUSCAR</button>
+        <button onclick="sortTable(0)">ORDENAR TÍTULO</button>
+        <button onclick="sortTable(1)">ORDENAR NOTA</button>
+        <button onclick="sortTable(2)">ORDENAR AÑO</button>
+        <button onclick="sortTable(3)">ORDENAR PRODUCTORA</button>
+        <button onclick="sortTable(4)">ORDENAR BASADO EN</button>
+    </div>
+
+    <div class="table-container">
+        <table id="movieTable">
+            <thead>
+                <tr>
+                    <th>TÍTULO</th>
+                    <th>NOTA</th>
+                    <th>AÑO</th>
+                    <th>PRODUCTORA</th>
+                    <th>BASADO EN</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Piratas del Caribe 1</td>
+                    <td><span class="nota-badge">8.5</span></td>
+                    <td>2003</td>
+                    <td>Disney</td>
+                    <td>Piratas</td>
+                </tr>
+                <tr>
+                    <td>Piratas del Caribe 2</td>
+                    <td><span class="nota-badge">7.5</span></td>
+                    <td>2006</td>
+                    <td>Disney</td>
+                    <td>Piratas</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Detalles</h2>
+            <div id="modalBody" class="modal-data">
+                </div>
+            <button class="close-btn" onclick="closeModal()">CONTINUAR</button>
+        </div>
+    </div>
+
+    <script>
+        // Función para ordenar todas las columnas
+        function sortTable(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("movieTable");
+            switching = true;
+            dir = "asc"; 
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    x = rows[i].getElementsByTagName("TD")[n];
+                    y = rows[i + 1].getElementsByTagName("TD")[n];
+                    
+                    let valX = x.innerText.toLowerCase();
+                    let valY = y.innerText.toLowerCase();
+                    
+                    // Lógica para números en Nota (1) y Año (2)
+                    if(n === 1 || n === 2) {
+                        let numX = parseFloat(valX);
+                        let numY = parseFloat(valY);
+                        if (dir == "asc") {
+                            if (numX > numY) { shouldSwitch = true; break; }
+                        } else {
+                            if (numX < numY) { shouldSwitch = true; break; }
+                        }
+                    } else {
+                        // Lógica para texto (Título, Productora, Basado En)
+                        if (dir == "asc") {
+                            if (valX > valY) { shouldSwitch = true; break; }
+                        } else {
+                            if (valX < valY) { shouldSwitch = true; break; }
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    switchcount ++;
+                } else {
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+
+        // Función de Búsqueda y Popup
+        function openSearch() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const table = document.getElementById('movieTable');
+            const tr = table.getElementsByTagName('tr');
+            let found = false;
+
+            if(input === "") return;
+
+            for (let i = 1; i < tr.length; i++) {
+                let title = tr[i].getElementsByTagName('td')[0].innerText.toLowerCase();
+                if (title.includes(input)) {
+                    const cells = tr[i].getElementsByTagName('td');
+                    document.getElementById('modalTitle').innerText = cells[0].innerText;
+                    document.getElementById('modalBody').innerHTML = `
+                        <p><b>Puntuación:</b> <span style="color:#46d369">${cells[1].innerText}</span></p>
+                        <p><b>Año:</b> ${cells[2].innerText}</p>
+                        <p><b>Estudio:</b> ${cells[3].innerText}</p>
+                        <p><b>Origen:</b> ${cells[4].innerText}</p>
+                        <br>
+                        <p style="color:var(--text-grey);">Invocando datos desde el abismo... La película seleccionada coincide con los registros de la secta.</p>
+                    `;
+                    document.getElementById('myModal').style.display = "block";
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) alert("Película no encontrada en los archivos.");
+        }
+
+        function closeModal() {
+            document.getElementById('myModal').style.display = "none";
+        }
+
+        // Cerrar modal al hacer clic en el fondo oscuro
+        window.onclick = function(event) {
+            const modal = document.getElementById('myModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVENTURAS SUELTAS - SECTARIOS DE CTHULHU</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+
+        :root {
+            --enigma-green: #33ff33;
+            --enigma-dark-green: #1a5c1a;
+            --enigma-bg: #050505;
+            --enigma-panel: #1c1c1c;
+        }
+
+        body {
+            background-color: #000;
+            color: var(--enigma-green);
+            font-family: 'Courier Prime', monospace;
+            margin: 0;
+            padding: 20px;
+            background-image: radial-gradient(circle, #111 0%, #000 100%);
+            /* CORRECCIÓN: Scroll en todas las direcciones */
+            overflow: auto;
+            min-height: 100vh;
+        }
+
+        /* Efecto de parpadeo de pantalla vieja */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 2000;
+            pointer-events: none;
+            background-size: 100% 3px, 3px 100%;
+        }
+
+        .terminal-frame {
+            max-width: 900px;
+            margin: 0 auto;
+            border: 10px solid #333;
+            border-radius: 10px;
+            background: var(--enigma-bg);
+            padding: 30px;
+            box-shadow: 0 0 40px rgba(51, 255, 51, 0.2);
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--enigma-dark-green);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+
+        /* Panel de Control Enigma */
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        input[type="text"] {
+            background: #000;
+            border: 1px solid var(--enigma-green);
+            color: var(--enigma-green);
+            padding: 10px;
+            font-family: 'Courier Prime', monospace;
+            outline: none;
+            width: 250px;
+        }
+
+        .btn-enigma {
+            background: var(--enigma-dark-green);
+            color: #000;
+            border: 1px solid var(--enigma-green);
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+
+        .btn-enigma:hover {
+            background: var(--enigma-green);
+            box-shadow: 0 0 15px var(--enigma-green);
+        }
+
+        .sort-row {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* CORRECCIÓN: Contenedor para scroll horizontal en tablas */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--enigma-dark-green);
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px; /* Asegura que no se colapse en móviles */
+        }
+
+        th {
+            background: var(--enigma-dark-green);
+            color: #000;
+            padding: 10px;
+            text-align: left;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 12px;
+            border: 1px solid var(--enigma-dark-green);
+            font-size: 0.9rem;
+        }
+
+        tr:nth-child(even) {
+            background: rgba(51, 255, 51, 0.05);
+        }
+
+        /* Popup Enigma con Scroll */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.95);
+            /* CORRECCIÓN: Scroll vertical en el popup */
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            border: 3px solid var(--enigma-green);
+            background: #050505;
+            /* CORRECCIÓN: Margen flexible para evitar bloqueos */
+            margin: 50px auto; 
+            padding: 40px;
+            width: 85%;
+            max-width: 450px;
+            position: relative;
+            box-shadow: 0 0 50px var(--enigma-dark-green);
+            box-sizing: border-box;
+        }
+
+        .modal-content h2 {
+            border-bottom: 1px solid var(--enigma-green);
+            padding-bottom: 10px;
+            color: var(--enigma-green);
+            font-size: 1.2rem;
+        }
+
+        .data-line { margin: 15px 0; color: var(--enigma-green); }
+        .data-label { color: var(--enigma-dark-green); font-weight: bold; }
+
+        .close-btn {
+            margin-top: 30px;
+            width: 100%;
+        }
+
+        /* Media query para móviles */
+        @media (max-width: 600px) {
+            .terminal-frame { padding: 15px; }
+            h1 { font-size: 1.1rem; }
+            input[type="text"] { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="terminal-frame">
+        <h1>AVENTURAS SUELTAS</h1>
+
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="INTRODUZCA NOMBRE...">
+                <button class="btn-enigma" onclick="openSearch()">BUSCAR</button>
+            </div>
+            <div class="sort-row">
+                <button class="btn-enigma" onclick="sortTable(0)">NOMBRE</button>
+                <button class="btn-enigma" onclick="sortTable(1)">NOTA</button>
+                <button class="btn-enigma" onclick="sortTable(2)">LIBRO</button>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <table id="adventureTable">
+                <thead>
+                    <tr>
+                        <th>Nombre de la aventura</th>
+                        <th>Nota media</th>
+                        <th>Libro al que pertenece</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Unos cuantos conocimientos</td>
+                        <td>8.0</td>
+                        <td>Secretos de Arkham</td>
+                    </tr>
+                    <tr>
+                        <td>Las colinas salvajes</td>
+                        <td>7.5</td>
+                        <td>Secretos de Arkham</td>
+                    </tr>
+                    <tr>
+                        <td>Los condenados</td>
+                        <td>9.0</td>
+                        <td>Secretos de Arkham</td>
+                    </tr>
+                    <tr>
+                        <td>En mitad de la noche</td>
+                        <td>8.5</td>
+                        <td>Secretos de Arkham</td>
+                    </tr>
+                    <tr>
+                        <td>El baile del muerto</td>
+                        <td>7.0</td>
+                        <td>La Llamada de Cthulhu (Básico)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="enigmaModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">INFORME</h2>
+            <div id="modalBody">
+                </div>
+            <button class="btn-enigma close-btn" onclick="closeModal()">CONTINUAR OPERACIÓN</button>
+        </div>
+    </div>
+
+    <script>
+        function sortTable(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("adventureTable");
+            switching = true;
+            dir = "asc"; 
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    x = rows[i].getElementsByTagName("TD")[n];
+                    y = rows[i + 1].getElementsByTagName("TD")[n];
+                    
+                    let valX = x.innerText.toLowerCase();
+                    let valY = y.innerText.toLowerCase();
+
+                    if(n === 1) { // Lógica numérica para columna Nota
+                        if (dir == "asc") {
+                            if (parseFloat(valX) > parseFloat(valY)) { shouldSwitch = true; break; }
+                        } else {
+                            if (parseFloat(valX) < parseFloat(valY)) { shouldSwitch = true; break; }
+                        }
+                    } else {
+                        if (dir == "asc") {
+                            if (valX > valY) { shouldSwitch = true; break; }
+                        } else {
+                            if (valX < valY) { shouldSwitch = true; break; }
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    switchcount ++;
+                } else {
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+
+        function openSearch() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const table = document.getElementById('adventureTable');
+            const tr = table.getElementsByTagName('tr');
+            let found = false;
+
+            if(input === "") return;
+
+            for (let i = 1; i < tr.length; i++) {
+                let name = tr[i].getElementsByTagName('td')[0].innerText.toLowerCase();
+                if (name.includes(input)) {
+                    const c = tr[i].getElementsByTagName('td');
+                    document.getElementById('modalTitle').innerText = "ARCHIVO: " + c[0].innerText.toUpperCase();
+                    document.getElementById('modalBody').innerHTML = `
+                        <div class="data-line"><span class="data-label">ESTATUS:</span> CLASIFICADO</div>
+                        <div class="data-line"><span class="data-label">CALIFICACIÓN:</span> ${c[1].innerText}/10</div>
+                        <div class="data-line"><span class="data-label">FUENTE:</span> ${c[2].innerText}</div>
+                        <div class="data-line"><span class="data-label">ZONA:</span> DESCONOCIDA</div>
+                        <p style="font-size:0.75rem; color:var(--enigma-dark-green); margin-top:20px; font-style:italic;">
+                            [ADVERTENCIA: TRANSMISIÓN INTERCEPTADA POR LA SECTA]
+                        </p>
+                    `;
+                    document.getElementById('enigmaModal').style.display = "block";
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) alert("ERROR: SECUENCIA DE BÚSQUEDA NO ENCONTRADA.");
+        }
+
+        function closeModal() {
+            document.getElementById('enigmaModal').style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('enigmaModal')) closeModal();
+        }
+    </script>
+</body>
+</html>

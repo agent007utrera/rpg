@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIDEOJUEGOS - SECTARIOS DE CTHULHU</title>
+    <style>
+        :root {
+            --steam-blue: #1b2838;
+            --steam-dark: #171a21;
+            --steam-light-blue: #66c0f4;
+            --steam-grey: #2a475e;
+            --text-light: #c7d5e0;
+        }
+
+        body {
+            background-color: var(--steam-dark);
+            background-image: linear-gradient(to bottom, #1b2838, #171a21);
+            color: var(--text-light);
+            font-family: "Motiva Sans", Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+            text-shadow: 0px 4px 10px rgba(0,0,0,0.5);
+        }
+
+        /* Controles de Steam */
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        input[type="text"] {
+            background-color: #101822;
+            border: 1px solid #000;
+            color: white;
+            padding: 10px;
+            border-radius: 3px;
+            width: 250px;
+        }
+
+        button {
+            background: linear-gradient(to right, #47bfff 0%, #1a44c2 100%);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            transition: filter 0.2s;
+        }
+
+        button:hover {
+            filter: brightness(1.2);
+        }
+
+        .btn-sort {
+            background: var(--steam-grey);
+        }
+
+        /* Tabla Estilo Steam */
+        .table-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background-color: rgba(0, 0, 0, 0.4);
+            color: var(--steam-light-blue);
+            text-align: left;
+            padding: 12px;
+            border-bottom: 2px solid var(--steam-grey);
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .nota-box {
+            background: #4c6b22; /* Color verde reseñas positivas Steam */
+            color: white;
+            padding: 2px 6px;
+            border-radius: 2px;
+            font-weight: bold;
+        }
+
+        /* Popup Estilo Steam Overlay */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(4px);
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: var(--steam-blue);
+            margin: 10% auto;
+            padding: 30px;
+            width: 85%;
+            max-width: 500px;
+            border-radius: 4px;
+            border: 1px solid var(--steam-light-blue);
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .modal-header {
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--steam-grey);
+            padding-bottom: 10px;
+        }
+
+        .modal-body p {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .modal-body b {
+            color: var(--steam-light-blue);
+        }
+
+        .close-btn {
+            background: var(--steam-grey);
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>STEAMTHULHU - VIDEOJUEGOS</h1>
+
+    <div class="controls">
+        <input type="text" id="searchInput" placeholder="Buscar título de juego...">
+        <button onclick="openSearch()">BUSCAR</button>
+        <button class="btn-sort" onclick="sortTable(0)">Nombre</button>
+        <button class="btn-sort" onclick="sortTable(1)">Nota</button>
+        <button class="btn-sort" onclick="sortTable(2)">Año</button>
+        <button class="btn-sort" onclick="sortTable(3)">Compañía</button>
+        <button class="btn-sort" onclick="sortTable(4)">Plataforma</button>
+        <button class="btn-sort" onclick="sortTable(5)">Tipo</button>
+    </div>
+
+    <div class="table-container">
+        <table id="gamesTable">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Nota</th>
+                    <th>Año</th>
+                    <th>Compañía</th>
+                    <th>Plataforma</th>
+                    <th>Tipo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Call of Cthulhu</td>
+                    <td><span class="nota-box">7.0</span></td>
+                    <td>2018</td>
+                    <td>Cyanide Studio</td>
+                    <td>PC, PS4, Xbox One</td>
+                    <td>RPG / Investigación</td>
+                </tr>
+                <tr>
+                    <td>The Sinking City</td>
+                    <td><span class="nota-box">7.5</span></td>
+                    <td>2019</td>
+                    <td>Frogwares</td>
+                    <td>PC, PS5, Switch</td>
+                    <td>Mundo Abierto</td>
+                </tr>
+                <tr>
+                    <td>Amnesia: The Dark Descent</td>
+                    <td><span class="nota-box">9.0</span></td>
+                    <td>2010</td>
+                    <td>Frictional Games</td>
+                    <td>PC, PS4</td>
+                    <td>Survival Horror</td>
+                </tr>
+                <tr>
+                    <td>Bloodborne</td>
+                    <td><span class="nota-box">9.5</span></td>
+                    <td>2015</td>
+                    <td>FromSoftware</td>
+                    <td>PS4</td>
+                    <td>Action RPG</td>
+                </tr>
+                <tr>
+                    <td>Eternal Darkness</td>
+                    <td><span class="nota-box">9.2</span></td>
+                    <td>2002</td>
+                    <td>Silicon Knights</td>
+                    <td>GameCube</td>
+                    <td>Terror Psicológico</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="gameModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" id="modalTitle">Detalles del Juego</div>
+            <div class="modal-body" id="modalBody"></div>
+            <button class="close-btn" onclick="closeModal()">CONTINUAR</button>
+        </div>
+    </div>
+
+    <script>
+        function sortTable(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("gamesTable");
+            switching = true;
+            dir = "asc"; 
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    x = rows[i].getElementsByTagName("TD")[n];
+                    y = rows[i + 1].getElementsByTagName("TD")[n];
+                    
+                    let valX = x.innerText.toLowerCase();
+                    let valY = y.innerText.toLowerCase();
+                    
+                    // Lógica numérica para Nota (1) y Año (2)
+                    if(n === 1 || n === 2) {
+                        if (dir == "asc") {
+                            if (parseFloat(valX) > parseFloat(valY)) { shouldSwitch = true; break; }
+                        } else {
+                            if (parseFloat(valX) < parseFloat(valY)) { shouldSwitch = true; break; }
+                        }
+                    } else {
+                        if (dir == "asc") {
+                            if (valX > valY) { shouldSwitch = true; break; }
+                        } else {
+                            if (valX < valY) { shouldSwitch = true; break; }
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    switchcount ++;
+                } else {
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+
+        function openSearch() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const table = document.getElementById('gamesTable');
+            const tr = table.getElementsByTagName('tr');
+            let found = false;
+
+            if(input === "") return;
+
+            for (let i = 1; i < tr.length; i++) {
+                let name = tr[i].getElementsByTagName('td')[0].innerText.toLowerCase();
+                if (name.includes(input)) {
+                    const c = tr[i].getElementsByTagName('td');
+                    document.getElementById('modalTitle').innerText = c[0].innerText;
+                    document.getElementById('modalBody').innerHTML = `
+                        <p><b>Puntuación de Usuarios:</b> ${c[1].innerText}</p>
+                        <p><b>Fecha de Lanzamiento:</b> ${c[2].innerText}</p>
+                        <p><b>Desarrollador:</b> ${c[3].innerText}</p>
+                        <p><b>Plataformas:</b> ${c[4].innerText}</p>
+                        <p><b>Género:</b> ${c[5].innerText}</p>
+                        <hr style="border:0; border-top:1px solid #2a475e; margin:15px 0;">
+                        <p style="font-size:0.85rem;">Reseñas generales: <span style="color:#66c0f4">Muy positivas</span></p>
+                    `;
+                    document.getElementById('gameModal').style.display = "block";
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) alert("No se han encontrado registros en la base de datos de Steamthulhu.");
+        }
+
+        function closeModal() {
+            document.getElementById('gameModal').style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('gameModal')) closeModal();
+        }
+    </script>
+
+</body>
+</html>
