@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVENTURAS SUELTAS - SECTARIOS DE CTHULHU</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+
+        :root {
+            --enigma-green: #33ff33;
+            --enigma-dark-green: #1a5c1a;
+            --enigma-bg: #050505;
+            --enigma-panel: #1c1c1c;
+        }
+
+        body {
+            background-color: #000;
+            color: var(--enigma-green);
+            font-family: 'Courier Prime', monospace;
+            margin: 0;
+            padding: 20px;
+            background-image: radial-gradient(circle, #111 0%, #000 100%);
+            /* CORRECCIÓN: Scroll en todas las direcciones */
+            overflow: auto;
+            min-height: 100vh;
+        }
+
+        /* Efecto de parpadeo de pantalla vieja */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 2000;
+            pointer-events: none;
+            background-size: 100% 3px, 3px 100%;
+        }
+
+        .terminal-frame {
+            max-width: 900px;
+            margin: 0 auto;
+            border: 10px solid #333;
+            border-radius: 10px;
+            background: var(--enigma-bg);
+            padding: 30px;
+            box-shadow: 0 0 40px rgba(51, 255, 51, 0.2);
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--enigma-dark-green);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+
+        /* Panel de Control Enigma */
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        input[type="text"] {
+            background: #000;
+            border: 1px solid var(--enigma-green);
+            color: var(--enigma-green);
+            padding: 10px;
+            font-family: 'Courier Prime', monospace;
+            outline: none;
+            width: 250px;
+        }
+
+        .btn-enigma {
+            background: var(--enigma-dark-green);
+            color: #000;
+            border: 1px solid var(--enigma-green);
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+
+        .btn-enigma:hover {
+            background: var(--enigma-green);
+            box-shadow: 0 0 15px var(--enigma-green);
+        }
+
+        .sort-row {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* CORRECCIÓN: Contenedor para scroll horizontal en tablas */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--enigma-dark-green);
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px; /* Asegura que no se colapse en móviles */
+        }
+
+        th {
+            background: var(--enigma-dark-green);
+            color: #000;
+            padding: 10px;
+            text-align: left;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 12px;
+            border: 1px solid var(--enigma-dark-green);
+            font-size: 0.9rem;
+        }
+
+        tr:nth-child(even) {
+            background: rgba(51, 255, 51, 0.05);
+        }
+
+        /* Popup Enigma con Scroll */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.95);
+            /* CORRECCIÓN: Scroll vertical en el popup */
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            border: 3px solid var(--enigma-green);
+            background: #050505;
+            /* CORRECCIÓN: Margen flexible para evitar bloqueos */
+            margin: 50px auto; 
+            padding: 40px;
+            width: 85%;
+            max-width: 450px;
+            position: relative;
+            box-shadow: 0 0 50px var(--enigma-dark-green);
+            box-sizing: border-box;
+        }
+
+        .modal-content h2 {
+            border-bottom: 1px solid var(--enigma-green);
+            padding-bottom: 10px;
+            color: var(--enigma-green);
+            font-size: 1.2rem;
+        }
+
+        .data-line { margin: 15px 0; color: var(--enigma-green); }
+        .data-label { color: var(--enigma-dark-green); font-weight: bold; }
+
+        .close-btn {
+            margin-top: 30px;
+            width: 100%;
+        }
+
+        /* Media query para móviles */
+        @media (max-width: 600px) {
+            .terminal-frame { padding: 15px; }
+            h1 { font-size: 1.1rem; }
+            input[type="text"] { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="terminal-frame">
+        <h1>AVENTURAS SUELTAS</h1>
+
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="INTRODUZCA NOMBRE...">
+                <button class="btn-enigma" onclick="openSearch()">BUSCAR</button>
+            </div>
+            <div class="sort-row">
+                <button class="btn-enigma" onclick="sortTable(0)">NOMBRE</button>
+                <button class="btn-enigma" onclick="sortTable(1)">NOTA</button>
+                <button class="btn-enigma" onclick="sortTable(2)">LIBRO</button>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <table id="adventureTable">
+                <thead>
+                    <tr>
+                        <th>Nombre de la aventura</th>
+                        <th>Nota media</th>
+                        <th>Libro al que pertenece</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+<!-- ********************************************************************************************************************* -->
+
+
+                   <tr>
+                        <td>El hechizo de la Casa Corbitt</td>
+                        <td>7.12</td>
+                        <td>La llamada de Cthulhu</td>
+                    </tr>
+
+                    <tr>
+                        <td>El loco de Jenning</td>
+                        <td>6.14</td>
+                        <td>La llamada de Cthulhu</td>
+                    </tr>
+
+	 <tr>
+                        <td>La Casa Brockford</td>
+                        <td>5.90</td>
+                        <td>La llamada de Cthulhu</td>
+                    </tr>
+
+	<tr>
+                        <td>Persiguiendo papeles</td>
+                        <td>6.23</td>
+                        <td>La llamada de Cthulhu</td>
+                    </tr>
+
+	<tr>
+                        <td>El misterio de Loch Feinn</td>
+                        <td>6</td>
+                        <td>La llamada de Cthulhu</td>
+                    </tr>
+
+	<tr>
+                        <td>El rescate</td>
+                        <td>4.75</td>
+                        <td>La llamada de Cthulhu</td>
+                    </tr>
+
+	<tr>
+                        <td>El secreto de Castronegro</td>
+                        <td>5.92</td>
+                        <td>La llamada de Cthulhu</td>
+                    </tr>
+
+	<tr>
+                        <td>La amenaza subterránea</td>
+                        <td>4.33</td>
+                        <td>Fragmentos de terror</td>
+                    </tr>
+
+	<tr>
+                        <td>El valle de las cuatro capillas</td>
+                        <td>4.33</td>
+                        <td>Fragmentos de terror</td>
+                    </tr>
+
+	<tr>
+                        <td>La subasta</td>
+                        <td>6.64</td>
+                        <td>El manicomio y otros relatos</td>
+                    </tr>
+
+	<tr>
+                        <td>Solo contra el Wendigo</td>
+                        <td>5.43</td>
+                        <td>Solo contra el Wendigo</td>
+                    </tr>
+
+	<tr>
+                        <td>El faro sin luz</td>
+                        <td>6.38</td>
+                        <td>El faro sin luz</td>
+                    </tr>
+
+	<tr>
+                        <td>La isla secreta</td>
+                        <td>5.50</td>
+                        <td>La isla secreta</td>
+                    </tr>
+
+	<tr>
+                        <td>La broma macabra</td>
+                        <td>6.55</td>
+                        <td>La broma macabra</td>
+                    </tr>
+
+	<tr>
+                        <td>246 Corbitt Street</td>
+                        <td>5.25</td>
+                        <td>246 Corbitt Street</td>
+                    </tr>
+
+	<tr>
+                        <td>El Hombre de mimbre</td>
+                        <td>6.55</td>
+                        <td>El Hombre de mimbre</td>
+                    </tr>
+
+	<tr>
+                        <td>El aullido de las quimeras</td>
+                        <td>4.66</td>
+                        <td>El aullido de las quimeras</td>
+                    </tr>
+
+	<tr>
+                        <td>El hospicio</td>
+                        <td>5.62</td>
+                        <td>El hospicio</td>
+                    </tr>
+
+	<tr>
+                        <td>El arte de la locura</td>
+                        <td>5.57</td>
+                        <td>El arte de la locura</td>
+                    </tr>
+
+	<tr>
+                        <td>Una planta de lo más espeluznante</td>
+                        <td>4</td>
+                        <td>Una planta de lo más espeluznante</td>
+                    </tr>
+
+	<tr>
+                        <td>Atlantis</td>
+                        <td>4.57</td>
+                        <td>Atlantis</td>
+                    </tr>
+
+	<tr>
+                        <td>La tumba de Eibon</td>
+                        <td>4</td>
+                        <td>La tumba de Eibon</td>
+                    </tr>
+
+	<tr>
+                        <td>El manuscritop Tolkien</td>
+                        <td>4</td>
+                        <td>El manuscrito Tolkien</td>
+                    </tr>
+
+	<tr>
+                        <td>Muerte en Dunwich</td>
+                        <td>4.16</td>
+                        <td>Muerte en Dunwich</td>
+                    </tr>
+
+	<tr>
+                        <td>El siniestro pueblo de Karpino</td>
+                        <td>5.83</td>
+                        <td>El siniestro pueblo de Karpino</td>
+                    </tr>
+
+	<tr>
+                        <td>Cthulhu for president!</td>
+                        <td>6</td>
+                        <td>Cthulhu for president!</td>
+                    </tr>
+
+	<tr>
+                        <td>Oro negro, tumba azul</td>
+                        <td>5.33</td>
+                        <td>Oro negro, tumba azul</td>
+                    </tr>
+
+	<tr>
+                        <td>Perlas ensangrentadas</td>
+                        <td>4.42</td>
+                        <td>Perlas ensangrentadas</td>
+                    </tr>
+
+	<tr>
+                        <td>Sombras de Leningrado</td>
+                        <td>5.11</td>
+                        <td>Sombras de Leningrado</td>
+                    </tr>
+
+	<tr>
+                        <td>Peque as chispas</td>
+                        <td>4.75</td>
+                        <td>Peque as chispas</td>
+                    </tr>
+
+	<tr>
+                        <td>El loco</td>
+                        <td>4.91</td>
+                        <td>El manicomio y otros relatos</td>
+                    </tr>
+
+	<tr>
+                        <td>El pico Diablo Negro</td>
+                        <td>4.33</td>
+                        <td>El manicomio y otros relatos</td>
+                    </tr>
+
+	<tr>
+                        <td>El manicomio</td>
+                        <td>6</td>
+                        <td>El manicomio y otros relatos</td>
+                    </tr>
+
+	<tr>
+                        <td>El 'Mauritania'</td>
+                        <td>6.1</td>
+                        <td>El manicomio y otros relatos</td>
+                    </tr>
+
+	<tr>
+                        <td>Un portal al pasado</td>
+                        <td>4.41</td>
+                        <td>El manicomio y otros relatos</td>
+                    </tr>
+
+	<tr>
+                        <td>La Casa Westchester</td>
+                        <td>5</td>
+                        <td>El manicomio y otros relatos</td>
+                    </tr>
+
+	<tr>
+                        <td>¡Adiós, a-Mi-Go!</td>
+                        <td>3.55</td>
+                        <td>¡Adiós, a-Mi-Go!</td>
+                    </tr>
+
+	<tr>
+                        <td>¡Glozel es auténtico!</td>
+                        <td>3.8</td>
+                        <td>¡Glozel es auténtico!</td>
+                    </tr>
+
+	<tr>
+                        <td>Secretos del Kremlin</td>
+                        <td>4.75</td>
+                        <td>¡Glozel es auténntico!</td>
+                    </tr>
+
+	<tr>
+                        <td>¡Jenkin vive!</td>
+                        <td>4.25</td>
+                        <td>¡Jenkin vive!</td>
+                    </tr>
+
+	<tr>
+                        <td>¡Limpien el pasillo número cuatro!</td>
+                        <td>3.75</td>
+                        <td>¡Limpien el pasillo número cuatro!</td>
+                    </tr>
+
+	<tr>
+                        <td>Acto I - Escena 1</td>
+                        <td>6</td>
+                        <td>¡No sobre nosotros!</td>
+                    </tr>
+
+	<tr>
+                        <td>Acto I - Escena 2</td>
+                        <td>6.75</td>
+                        <td>¡No sobre nosotros!</td>
+                    </tr>
+
+	<tr>
+                        <td>Entreacto</td>
+                        <td>6.33</td>
+                        <td>¡No sobre nosotros!</td>
+                    </tr>
+
+	<tr>
+                        <td>Acto II - Escena 1</td>
+                        <td>7</td>
+                        <td>¡No sobre nosotros!</td>
+                    </tr>
+
+	<tr>
+                        <td>Acto II - Escena 2</td>
+                        <td>6.33</td>
+                        <td>¡No sobre nosotros!</td>
+                    </tr>
+
+	<tr>
+                        <td>¿Estaba muerto?</td>
+                        <td>1</td>
+                        <td>¿Estaba muerto?</td>
+                    </tr>
+
+	<tr>
+                        <td>3 días en el olvido</td>
+                        <td>5.33</td>
+                        <td>3 días en el olvido</td>
+                    </tr>
+
+	<tr>
+                        <td>Codigo 246</td>
+                        <td>4.57</td>
+                        <td>246 Corbitt Street</td>
+                    </tr>
+
+	<tr>
+                        <td>Seguir el rastro</td>
+                        <td>4.25</td>
+                        <td>246 Corbitt Street</td>
+                    </tr>
+
+	<tr>
+                        <td>Ascensión</td>
+                        <td>3.75</td>
+                        <td>246 Corbitt Street</td>
+                    </tr>
+
+	<tr>
+                        <td>1888</td>
+                        <td>6.25</td>
+                        <td>1888</td>
+                    </tr>
+
+	<tr>
+                        <td>Primer acto</td>
+                        <td>5.33</td>
+                        <td>A cada cerdo...</td>
+                    </tr>
+
+	<tr>
+                        <td>Segundo acto</td>
+                        <td>4.66</td>
+                        <td>A cada cerdo...</td>
+                    </tr>
+
+	<tr>
+                        <td>Tercer acto</td>
+                        <td>5</td>
+                        <td>A cada cerdo...</td>
+                    </tr>
+
+	<tr>
+                        <td>A pedra da serpe</td>
+                        <td>4.16</td>
+                        <td>Líder</td>
+                    </tr>
+
+	<tr>
+                        <td>En la boca de las serpientes</td>
+                        <td>4.33</td>
+                        <td>Abominaciones del Amazonas</td>
+                    </tr>
+
+	<tr>
+                        <td>Las ruinas olvidadas</td>
+                        <td>4.5</td>
+                        <td>Abominaciones del Amazonas</td>
+                    </tr>
+
+	<tr>
+                        <td>Tras paredes de cobre y plomo</td>
+                        <td>4.5</td>
+                        <td>Abominaciones del Amazonas</td>
+                    </tr>
+
+	<tr>
+                        <td>¡Hacia lo desconocido!</td>
+                        <td>3.5</td>
+                        <td>Abuelito serpiente Yig</td>
+                    </tr>
+
+	<tr>
+                        <td>En tierras salvajes</td>
+                        <td>2.5</td>
+                        <td>Abuelito serpiente Yig</td>
+                    </tr>
+
+	<tr>
+                        <td>El cieno succionador de las Tierras Kársticas</td>
+                        <td>1</td>
+                        <td>Abuelito serpiente Yig</td>
+                    </tr>
+
+	<tr>
+                        <td>La Colina Pelada</td>
+                        <td>1</td>
+                        <td>Abuelito serpiente Yig</td>
+                    </tr>
+
+	<tr>
+                        <td>Huida de la boca de la sierpe</td>
+                        <td>3.5</td>
+                        <td>Abuelito serpiente Yig</td>
+                    </tr>
+
+	<tr>
+                        <td>Una estancia en Yilan</td>
+                        <td>1</td>
+                        <td>Abuelito serpiente Yig</td>
+                    </tr>
+
+	<tr>
+                        <td>El extenso mundo de Yilan</td>
+                        <td>1</td>
+                        <td>Abuelito serpiente Yig</td>
+                    </tr>
+
+	<tr>
+                        <td>Sueños y pesadillas</td>
+                        <td>1</td>
+                        <td>Abuelito serpiente Yig</td>
+                    </tr>
+
+	<tr>
+                        <td>Entre los yithianos</td>
+                        <td>1</td>
+                        <td>Abuelito serpiente Yig</td>
+                    </tr>
+
+	<tr>
+                        <td>La serpiente de bronce</td>
+                        <td>4</td>
+                        <td>Abuelito serpiente Yig</td>
+                    </tr>
+
+	<tr>
+                        <td>Por falta de un arma lanzarrayos</td>
+                        <td>1</td>
+                        <td>Abuelito serpiente Yig</td>
+                    </tr>
+
+	<tr>
+                        <td>Repta el Shoggoth</td>
+                        <td>1</td>
+                        <td>Abuelito serpiente Yig</td>
+                    </tr>
+
+	<tr>
+                        <td>Cercenar la cabeza de la sierpe</td>
+                        <td>1</td>
+                        <td>Abuelito serpiente Yig</td>
+                    </tr>
+
+	<tr>
+                        <td>Abuelito serpiente Yig</td>
+                        <td>1</td>
+                        <td>Abuelito serpiente Yig</td>
+                    </tr>
+
+	<tr>
+                        <td>Un descubrimiento fortuito</td>
+                        <td>4.5</td>
+                        <td>Acólitos</td>
+                    </tr>
+
+	<tr>
+                        <td>A dos metros bajo tierra</td>
+                        <td>1</td>
+                        <td>Acólitos</td>
+                    </tr>
+
+	<tr>
+                        <td>Una mente enferma</td>
+                        <td>1</td>
+                        <td>Acólitos</td>
+                    </tr>
+
+	<tr>
+                        <td>El último gozo</td>
+                        <td>3.5</td>
+                        <td>Acólitos</td>
+                    </tr>
+
+	<tr>
+                        <td>Objetos perdidos</td>
+                        <td>1</td>
+                        <td>Acólitos</td>
+                    </tr>
+
+	<tr>
+                        <td>Círculo de amigos</td>
+                        <td>3</td>
+                        <td>Acólitos</td>
+                    </tr>
+
+	<tr>
+                        <td>Red fantasmal</td>
+                        <td>1</td>
+                        <td>Acólitos</td>
+                    </tr>
+
+	<tr>
+                        <td>Pintado en un rincón</td>
+                        <td>1</td>
+                        <td>Acólitos</td>
+                    </tr>
+
+	<tr>
+                        <td>Donde Satán tropezó</td>
+                        <td>1</td>
+                        <td>Acólitos</td>
+                    </tr>
+
+	<tr>
+                        <td>Boquiabiertos</td>
+                        <td>1</td>
+                        <td>Acólitos</td>
+                    </tr>
+
+	<tr>
+                        <td>El Hombre Horrendo</td>
+                        <td>1</td>
+                        <td>Acólitos</td>
+                    </tr>
+
+	<tr>
+                        <td>La grúa</td>
+                        <td>1</td>
+                        <td>Acólitos</td>
+                    </tr>
+
+	<tr>
+                        <td>Canon Cangrejo</td>
+                        <td>1</td>
+                        <td>Acólitos</td>
+                    </tr>
+
+	<tr>
+                        <td>Ojo vago</td>
+                        <td>1</td>
+                        <td>Acólitos</td>
+                    </tr>
+
+	<tr>
+                        <td>El abrevadero</td>
+                        <td>3</td>
+                        <td>Acólitos</td>
+                    </tr>
+
+	<tr>
+                        <td>Al caer la noche</td>
+                        <td>4.66</td>
+                        <td>Líder</td>
+                    </tr>
+
+	<tr>
+                        <td>Alan</td>
+                        <td>1</td>
+                        <td>Alan</td>
+                    </tr>
+
+	<tr>
+                        <td>Algo verde sobre fondo blanco</td>
+                        <td>4</td>
+                        <td>Algo verde sobre fondo blanco</td>
+                    </tr>
+
+	<tr>
+                        <td>Alimento marino</td>
+                        <td>4</td>
+                        <td>Alimento marino</td>
+                    </tr>
+
+	<tr>
+                        <td>Amnesia</td>
+                        <td>4.33</td>
+                        <td>Líder</td>
+                    </tr>
+
+	<tr>
+                        <td>La caza salvaje</td>
+                        <td>7</td>
+                        <td>Amos ocultos</td>
+                    </tr>
+
+	<tr>
+                        <td>La verdad os hará libres</td>
+                        <td>2</td>
+                        <td>Amos ocultos</td>
+                    </tr>
+
+	<tr>
+                        <td>Mayoría de edad</td>
+                        <td>4.5</td>
+                        <td>Amos ocultos</td>
+                    </tr>
+
+	<tr>
+                        <td>Mary</td>
+                        <td>5.33</td>
+                        <td>Antes de la caída</td>
+                    </tr>
+
+	<tr>
+                        <td>Un viejo conocido</td>
+                        <td>4.5</td>
+                        <td>Antes de la caída</td>
+                    </tr>
+
+	<tr>
+                        <td>La conexión Innsmouth</td>
+                        <td>4</td>
+                        <td>Antes de la caída</td>
+                    </tr>
+
+	<tr>
+                        <td>La luz oculta</td>
+                        <td>3</td>
+                        <td>Antes de la caída</td>
+                    </tr>
+
+	<tr>
+                        <td>Marque 'T' para terror</td>
+                        <td>1</td>
+                        <td>White Dwarf</td>
+                    </tr>
+
+	<tr>
+                        <td>El rastro de la repugnante baba</td>
+                        <td>2.5</td>
+                        <td>White Dwarf</td>
+                    </tr>
+
+	<tr>
+                        <td>¡Cthulhu actual!</td>
+                        <td>3.5</td>
+                        <td>White Dwarf</td>
+                    </tr>
+
+	<tr>
+                        <td>Los vigías de Walberswick</td>
+                        <td>5.33</td>
+                        <td>White Dwarf</td>
+                    </tr>
+
+	<tr>
+                        <td>La última entrada</td>
+                        <td>2</td>
+                        <td>White Dwarf</td>
+                    </tr>
+
+	<tr>
+                        <td>La piedra sangrante de Iphtah</td>
+                        <td>4.33</td>
+                        <td>White Dwarf</td>
+                    </tr>
+
+	<tr>
+                        <td>Dibuja persianas en el ayer</td>
+                        <td>1</td>
+                        <td>White Dwarf</td>
+                    </tr>
+
+	<tr>
+                        <td>El enigma de Surrey</td>
+                        <td>1</td>
+                        <td>White Dwarf</td>
+                    </tr>
+
+	<tr>
+                        <td>Miedo a volar</td>
+                        <td>1</td>
+                        <td>White Dwarf</td>
+                    </tr>
+
+	<tr>
+                        <td>El corazón de las tinieblas</td>
+                        <td>1</td>
+                        <td>White Dwarf</td>
+                    </tr>
+
+	<tr>
+                        <td>El fantasma del chacal</td>
+                        <td>3.5</td>
+                        <td>White Dwarf</td>
+                    </tr>
+
+	<tr>
+                        <td>Antiguo y moderno</td>
+                        <td>1</td>
+                        <td>White Dwarf</td>
+                    </tr>
+
+	<tr>
+                        <td>La maldición del hueso</td>
+                        <td>4</td>
+                        <td>White Dwarf</td>
+                    </tr>
+
+	<tr>
+                        <td>Terror en Paddington</td>
+                        <td>1</td>
+                        <td>White Dwarf</td>
+                    </tr>
+
+	<tr>
+                        <td>Cartas desde tierra extranjera</td>
+                        <td>1</td>
+                        <td>White Dwarf</td>
+                    </tr>
+
+	<tr>
+                        <td>El libro</td>
+                        <td>1</td>
+                        <td>White Dwarf</td>
+                    </tr>
+
+	<tr>
+                        <td>La sesión de espiritismo</td>
+                        <td>2.5</td>
+                        <td>White Dwarf</td>
+                    </tr>
+
+	<tr>
+                        <td>Una pena capital</td>
+                        <td>1</td>
+                        <td>White Dwarf</td>
+                    </tr>
+
+	<tr>
+                        <td>El espíritu de la montaña</td>
+                        <td>5.33</td>
+                        <td>White Dwarf</td>
+                    </tr>
+
+	<tr>
+                        <td>Apocalipsis 13:1</td>
+                        <td>2.5</td>
+                        <td>Apocalipsis 13:1</td>
+                    </tr>
+
+	<tr>
+                        <td>Áreas de descanso</td>
+                        <td>2</td>
+                        <td>Áreas de descanso</td>
+                    </tr>
+
+	<tr>
+                        <td>Asedio a Saxemberg</td>
+                        <td>7</td>
+                        <td>Asalto a las Montañas de la Locura</td>
+                    </tr>
+
+	<tr>
+                        <td>El reino flotante</td>
+                        <td>7</td>
+                        <td>Asalto a las Montañas de la Locura</td>
+                    </tr>
+
+<!-- ********************************************************************************************************************* -->
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="enigmaModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">INFORME</h2>
+            <div id="modalBody">
+                </div>
+            <button class="btn-enigma close-btn" onclick="closeModal()">CONTINUAR OPERACIÓN</button>
+        </div>
+    </div>
+
+    <script>
+        function sortTable(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("adventureTable");
+            switching = true;
+            dir = "asc"; 
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    x = rows[i].getElementsByTagName("TD")[n];
+                    y = rows[i + 1].getElementsByTagName("TD")[n];
+                    
+                    let valX = x.innerText.toLowerCase();
+                    let valY = y.innerText.toLowerCase();
+
+                    if(n === 1) { // Lógica numérica para columna Nota
+                        if (dir == "asc") {
+                            if (parseFloat(valX) > parseFloat(valY)) { shouldSwitch = true; break; }
+                        } else {
+                            if (parseFloat(valX) < parseFloat(valY)) { shouldSwitch = true; break; }
+                        }
+                    } else {
+                        if (dir == "asc") {
+                            if (valX > valY) { shouldSwitch = true; break; }
+                        } else {
+                            if (valX < valY) { shouldSwitch = true; break; }
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    switchcount ++;
+                } else {
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+
+        function openSearch() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const table = document.getElementById('adventureTable');
+            const tr = table.getElementsByTagName('tr');
+            let found = false;
+
+            if(input === "") return;
+
+            for (let i = 1; i < tr.length; i++) {
+                let name = tr[i].getElementsByTagName('td')[0].innerText.toLowerCase();
+                if (name.includes(input)) {
+                    const c = tr[i].getElementsByTagName('td');
+                    document.getElementById('modalTitle').innerText = "ARCHIVO: " + c[0].innerText.toUpperCase();
+                    document.getElementById('modalBody').innerHTML = `
+                        <div class="data-line"><span class="data-label">ESTATUS:</span> CLASIFICADO</div>
+                        <div class="data-line"><span class="data-label">CALIFICACIÓN:</span> ${c[1].innerText}/10</div>
+                        <div class="data-line"><span class="data-label">FUENTE:</span> ${c[2].innerText}</div>
+                        <div class="data-line"><span class="data-label">ZONA:</span> DESCONOCIDA</div>
+                        <p style="font-size:0.75rem; color:var(--enigma-dark-green); margin-top:20px; font-style:italic;">
+                            [ADVERTENCIA: TRANSMISIÓN INTERCEPTADA POR LA SECTA]
+                        </p>
+                    `;
+                    document.getElementById('enigmaModal').style.display = "block";
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) alert("ERROR: SECUENCIA DE BÚSQUEDA NO ENCONTRADA.");
+        }
+
+        function closeModal() {
+            document.getElementById('enigmaModal').style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('enigmaModal')) closeModal();
+        }
+    </script>
+
+</body></html>
